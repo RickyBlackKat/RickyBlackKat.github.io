@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manuscripts Watch</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #000000 100%);
+            color: #b6ffb0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #e2c590;
+            text-shadow: 0 0 12px #bfa76a, 0 0 32px #6b4f1d;
+            letter-spacing: 0.1em;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Share Tech Mono', monospace;
+        }
+        h1 {
+            animation: flicker 2s infinite alternate;
+        }
+        h1.glow {
+            color: #39ff14 !important;
+            text-shadow: 0 0 8px #39ff14, 0 0 16px #0f0 !important;
+            background: none !important;
+            -webkit-background-clip: initial !important;
+            -webkit-text-fill-color: initial !important;
+            background-clip: initial !important;
+            font-weight: bold;
+        }
+        @keyframes flicker {
+            0% { opacity: 1; text-shadow: 0 0 12px #bfa76a, 0 0 32px #6b4f1d; }
+            100% { opacity: 0.92; text-shadow: 0 0 24px #e2c590, 0 0 48px #6b4f1d; }
+        }
+        .matrix {
+            color: #39ff14;
+            text-shadow: 0 0 8px #39ff14, 0 0 16px #0f0;
+        }
+        .glow {
+            color: #39ff14;
+            text-shadow: 0 0 8px #39ff14, 0 0 16px #0f0;
+        }
+        #matrix-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.18;
+            filter: blur(0.5px);
+        }
+        /* Message board style for readability */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #101c10;
+            border-radius: 6px;
+            padding: 0.9rem 1rem;
+            border: 1.5px solid #39ff14;
+            color: #b6ffb0;
+            font-size: 1.13rem;
+            font-family: 'Share Tech Mono', monospace;
+            box-shadow: 0 2px 12px #39ff1433;
+            word-break: break-word;
+            margin-bottom: 1.2rem;
+        }
+        a {
+            color: #39ff14;
+        }
+        a:hover {
+            color: #b6ffb0;
+        }
+        .meta {
+            font-size: 1rem;
+            color: #bfa76a;
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: 0.05em;
+        }
+        .price-block {
+            margin-top: 0.5rem;
+            background: rgba(191,167,106,0.08);
+            padding: 0.5rem 0.7rem;
+            border-radius: 6px;
+            box-shadow: 0 0 8px #bfa76a44 inset;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix-canvas"></canvas>
+    <h1 class="glow">⛧ Secret Passage: Manuscripts Watch ⛧</h1>
+    <p class="meta">
+        Accessing hidden tomes... Displaying things of interest...<br>
+        <br>
+    </p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 2.5rem; justify-content: center; align-items: flex-start;">
+        <!-- Books Section (only) -->
+        <section style="flex: 1 1 340px; min-width: 320px; max-width: 420px;">
+            <h2 class="glow" style="margin-top:0;">Rare Books</h2>
+            <ul>
+            
+                <li>
+                    <span class="matrix"><strong>SQUIERS, GRANVILLE Secret hiding-places : the origins, histories and description</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $160.46<br>
+                        
+                        <a href="https://www.ebay.com/itm/297390943625?_skw=occult&amp;itmmeta=01JXN1AGKJ4ZZ99CTQ7XN68NBG&amp;hash=item453de1ad89%3Ag%3AuPkAAeSwJwBoRYXo&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1fshhqfQEfJ6RSfbfKgGrvkYtwICllcpq8yMXUGApWpGYZ%2Bu9uuRy5Ww1nfl1UIoB7FKo0NqxZ1GgUq2i%2F9M4aJzaA2Y%2F1n144OYEjEK0iwDtK9XwucQ6DwCMdWpsiYeugPLkAOWGEJIiLwGiyMuiSiQz%2F8nLR97MuoL6dNHwxJCMVjEq2GaqchgnwrBk53jJ8c3DDZMY6b5oBko%2BzPf2GLS95fNmHDmd1u1QMS8l5oL2AyH7HS7%2FLX%2FnHVdtir7irRDZx3WFqvA9c51jiFTLuO%7Ctkp%3ABFBMsoqqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>HAMILTON, ANNE, LADY (1766-1846) Secret History of the Court of England, from th</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $160.46<br>
+                        
+                        <a href="https://www.ebay.com/itm/306341891433?_skw=occult&amp;itmmeta=01JXN1AGKJXM8EDXCEQSWWXE5Q&amp;hash=item4753664d69%3Ag%3AoZ0AAeSw9nloRWyS&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1fv3XpJRXtWpZyYxN0lE5Yu9mLfaDjipweASpgmopyUtqZ%2FlLJDGcc%2BFU0KLMYAAfEvZDlZitZTMKqw65dIy4xbRyL0WGJHT8Csf%2F1K7e17oGuJjsImgmcd%2B3JFq%2FrgeEjBkMAte75JLvTfpaIGux%2BOP9Oh6SpgLBKaRg7ByrxOriKd2b0N2c1%2FW%2B%2BsUFxaFg17dPe9WL6xf6psVWgozTP8oGnexudSeG9E%2BPpUndnCBaSteGapVuaIYxDgaYaXr%2F1fuIFzt87Rk%2FsdhIxglDlp%7Ctkp%3ABFBMsoqqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>STEWARTON the Secret History of the Court and Cabinet of St. Cloud / in a Series</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $143.21<br>
+                        
+                        <a href="https://www.ebay.com/itm/116641065103?_skw=occult&amp;itmmeta=01JXN1AGKJ861BS8Z2W1A0JY6G&amp;hash=item1b2859688f%3Ag%3APY4AAeSw0gFoRWt0&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1d6GXof6MDHaZr2qBZ%2BmG8Rn%2BOdDkky4vIMjp0yfr9NIUi5EB%2FRjDamGw%2BIL%2BMnMhlIPhS7TJjKRVSq0mlCnEHQgCI%2BKgftnPdPxdt18IndXFiOeqE1a%2Bnxax6utF7f1TX0S2CTAyHkTPLVNVGgKrNkQhKNy%2BV3wteLgEF9IyhA2%2FEtDblWvu2HV%2B4qfy3k1qNkYkVgJH%2FiwN41ibRaPrxUqquO3sykzt4NuZJ0UK26JL5wvBfPaiNJAvafoBQfVofwrmkQmsdTyyRxmppkbto5%7Ctkp%3ABFBMsoqqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>TAYLOR, Ada White The Mystic Spell : a Metaphysical Romance / by Taylo</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $177.72<br>
+                        
+                        <a href="https://www.ebay.com/itm/116641055390?_skw=occult&amp;itmmeta=01JXN1AGKJARCNPF9TGVDR6QWB&amp;hash=item1b2859429e%3Ag%3AtS0AAeSwW6toRWfZ&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1frNhTps9I5QVur%2FO5tETMC6%2F979PI6ln5J6ed5IgCbZq5qrppghG91hA%2ByX%2B1bmgIjMxTHHbVjz1GQulQVArZDF9WqzIFx1eJT8sOYRx8Fjr%2BuMrjFPIj56r3FqxR5quv19ZQEZ6u98DUUurw4zxkkW%2FhJv8SjHYpEHEsxOX5A2DKmIT3Bv9XymNqv7%2Fc3TDe6lcC13niDkXa%2FTXd6EM%2F2xs9idE9wHLM6OstxIJP%2Fx%2FAB64jjZdE9%2B4GYgfmZ5gY8TglbwTYOVBqX8PimVS%2B0%7Ctkp%3ABFBMsoqqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>MCWATTERS, GEORGE S. Detectives of Europe and America, or, life in the Secret Se</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $160.46<br>
+                        
+                        <a href="https://www.ebay.com/itm/306341903758?_skw=occult&amp;itmmeta=01JXN1AGKJNCSA9FXJGJ9RQRGS&amp;hash=item4753667d8e%3Ag%3AazAAAeSwx4FoRWQe&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1eN8FfBwJ0xKNoyscwWNFWBWQG36bQztdk0TWL%2BGYGUTv%2F1Ml2sDy0tYGJ0dH1fKnoEau%2FCJ34aV6zfwEhVs29q0vPBrvndZ6aelgegX9Qyz4Yj3NJhR2wjdMQYEcQ5klIHz0FS3K03aGG8GUjUmeHIDBfpK2BdlZkusMgrFar1U%2FfWqZ1a43rU8bBdqIy0Z%2B6Js7XsATuqhHyFY%2B5A0llnSrBZe5teIxv5gkmQg0InD3NvkQMd9cTkpsVEikRYQzTjpeR0jpiP8a3TK1ho8Pc6%7Ctkp%3ABFBMsoqqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>Asahi, ISOSHI (1896 The secret of Japan&#39;s trade expansion / by ISOSHI Asahi 19</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $160.46<br>
+                        
+                        <a href="https://www.ebay.com/itm/306341902849?_skw=occult&amp;itmmeta=01JXN1AGKJ57Q9RYKGW91TB3TT&amp;hash=item4753667a01%3Ag%3A7EEAAeSw4WVoRWOn&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1e5OHMb30At3Y2G94IsXEaYUT39tukAGY%2FdXzsAjNSSrV%2FCO18yjuktjMMfiB1ZPC0MbDw9UtjZXvASYsbJNXolpg2QfEx9Gr0Y%2FePEzb6HfK9MNqX%2BpQBHGTpY%2FnrrNsEMijfa15fum5cCrJaLaItnjEjB3EL8FKxldXTVHZGxedXl8nsxmgkNRiRLhCImFCW5JxZRGRYd%2FvGbvKHPT8TJIs37e6Qk5XJhOr779Enn%2FfEMa1ViNDKgTzIOxptsvAu%2FZq2kzwxo2RtFDH6KhEM2%7Ctkp%3ABFBMsoqqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>AGG, JOHN. GUERNSEY COUNTESS of The book itself, or, or Secret memoirs of an ill</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $350.26<br>
+                        
+                        <a href="https://www.ebay.com/itm/297390902144?_skw=occult&amp;itmmeta=01JXN1AGKJZGTF3PG3M8WKC2RQ&amp;hash=item453de10b80%3Ag%3AQkMAAeSwbHNoRWWS&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1cofiwKOwsCdxCb8ZK6mJI7vcpHhGgDzwIMDMoSvj5ea64YxrFma%2Bgp8qhhjEjTyvAxNvYm%2Bj8oIn59nZdlPBOva%2FOvwuZg8kOadYDI76HzlFh6VBWg5yDLVhLajLoHULG6KlkgvwEr%2BRrObqY9xSYNT779Gd0C4%2BXUdP%2BKUpa26P%2BH9hQmdTAufiHCGidBIPY8qysLVaXsAjZYc5UxBAnFUiIUlAPr5ekbg99FPGs92kQj6UsDeNTmVP%2BO44Hl7pBhAJol%2B76b0kG0MZP6EtKc%7Ctkp%3ABFBMsoqqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>COURNEYA, JERRY Secret steps to beauty - Studio promo book First Edition Paperb</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $350.26<br>
+                        
+                        <a href="https://www.ebay.com/itm/116641050501?_skw=occult&amp;itmmeta=01JXN1AGKJS7541R6VFZKRZMDJ&amp;hash=item1b28592f85%3Ag%3Akf4AAeSwvM5oRWfN&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1fC98UGpdw6RjBVEIgZA6lmidvPYoYczCsQLzifYhpRZM8b2kJAmCsgdAYhsPaen3iI8AXx3ZJskVocmJwlqKCNxkE0tyosMF8z%2Bn%2FLuA02pc0%2FNC%2B1kfdwdOuMoWELXuhYqWvWBoodg65IiSCn%2BUBQ19xwN7sid82cwGEmJ4L5XWY%2BcQWggRqn%2Bjt4ZAxfsvs9LcEQdy1qb7doENeCuD7AYy0skoFVPSSl1S6aFsNhp2cfBxH1Fsxn6il72uCmLhCUwpE7Da8GQMKKRBSlfWOm%7Ctkp%3ABFBMsoqqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>The Book of Gold: A 17th Century Magical Grimoire of Amulets, Charms, Prayer...</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $56.67<br>
+                        
+                        <a href="https://www.ebay.com/itm/127001241045?_skw=grimoire&amp;epid=166457347&amp;itmmeta=01JXN1AHRFYCHS9XFA0GJ9MKMA&amp;hash=item1d91dd25d5%3Ag%3A8ewAAeSwflpn20DJ&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1dGtAXSmzlDk8N%2FgtqMSIy0H9rL7az%2Bm2djr%2FGlv3ydRO9adY6a8fa4zK6rnGvMPfawLOQteNueiVs8f8F5KqRqPxAba%2BHSymcRcvv62e43ifTQqPbOVE3ph3aIGEDVn8JXeuJSZVkgial0N2DeUPRQlOP0ppgx7L6pbMdsFjpoivIs%2F4D%2F5l%2BlWZIiTSsl1CtdG5eQyvGFHIz2SaRtzb%2FtK2e5VtBs93Q84OpKMFzNN42rtjINa4tdB7VUQIom2D%2B2WVIC2lG52d0A2Erq9uYj%7Ctkp%3ABFBM-pyqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>Grand Grimoire of Infernal Pacts</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $48.95<br>
+                        
+                        <a href="https://www.ebay.com/itm/387866155884?_skw=grimoire&amp;epid=210371550&amp;itmmeta=01JXN1AHRF7HZFQ5KTQ4C5WXQP&amp;hash=item5a4e9fdb6c%3Ag%3Ax-8AAeSwRCZnwN9c&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1dYb8iIuMUYpdRuC%2BNwGFDB3clBXSR0c93OiawdZFetZvb4hJI5xt0Hb2Mn%2FQ%2B3vVjjFYo9Dz1AwINPig2%2FkGel9VHICyE8dAB2u%2FAVW2ilG6cy5wvsUHXu0s36BnenTCHKIl%2Fmsj8WeJ2efzK5Hqp47LF1JkHUh0u0RJRWmTDRjAVumZrrp7bzEGjQ0ksB04i%2B0JFOb5eHSl9%2FhXi%2F4rwmkH%2FSaI3NRCiMeYlP7iuP2u9%2F7owY5KU34F4zibKcU%2BCafCIr%2FVQ%2FinapBZjfU2Tg%7Ctkp%3ABFBM-pyqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>The Grimoire of St. Cyprian - - Hardcover, by Skinner Dr Stephen; - Good b</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $48.33<br>
+                        
+                        <a href="https://www.ebay.com/itm/146517762524?_skw=grimoire&amp;epid=84441694&amp;itmmeta=01JXN1AHRF9AYT79BKSMN42GE7&amp;hash=item221d23a1dc%3Ag%3AcMsAAeSwR2NoSfTv&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1dhY7WPvmOFdiX21ISq0kDuoor1Z%2BFAvEN1TSccU%2BDMmram5goBgtCRNdZIKdEhyoToHoC4MvS%2B1d4W1qPpbXNErCOJLzR4xAah8rQF6eUZM91ZVo7%2BX1DLcS1LC6yOUp2LkIfYaw4j1ovs9ZxmRCaVNq22%2B05JUTPaCu8Tgh6porlI6ochpl4Z%2FzfqhWnumE8MnbLc4oXTIs6MmPvK%2FexBfQiIwSA%2BnEHRbnEOTxNzWgXMwAW0PGNIR1zduG1YJgRvT9CdwLgnl317H%2B0QhyIz%7Ctkp%3ABFBM-pyqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>The Grimoire of St. Cyprian - - Hardcover, by Skinner Dr Stephen; - Very Good u</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $48.33<br>
+                        
+                        <a href="https://www.ebay.com/itm/127033832906?_skw=grimoire&amp;epid=84441694&amp;itmmeta=01JXN1AHRF09PZZZGE10N2FCF8&amp;hash=item1d93ce75ca%3Ag%3Ab44AAeSwMP1oSfR4&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1e0iVRU7PgBJQbvZi%2FOJEaa%2FIllKavVYd8o%2FNDwAd1Xd4JhEi5JY%2Bx9yEz%2BfgY%2BjFC%2FnEh8TcmQyIftyQkjfbXo%2FoqY8QLhdca5N8Zix6YhMZmTY5dn8IT7BHd3H%2BQ04TSMswwfTBdJeSxOMi8BHUIb9L4FTvpI%2BL0mMjDq5u0c8YL4iGBpp7YayNjsjcDmecaNzjdn4qE%2F6g5BvHK1ELEHEqA%2Fe89hc7Rlh3RtZOg2mfmRJYUTaz9Y1tMmKkQ3V5wVfEFotkoZsG6HQRWIf%2B0t%7Ctkp%3ABFBM-pyqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>Leather Bound Hardcover &#34;The Satanic Bible&#34; by Anton LaVey Black Magic Grimoire</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $166.66<br>
+                        
+                            <span style="color: #00ffe7;">Description:</span>
+                            <span>Pre-Owned</span><br>
+                        
+                        <a href="https://www.ebay.com/itm/127166359266?_skw=grimoire&amp;itmmeta=01JXN1AHQ9HXR35N9NNE2TEFZ8&amp;hash=item1d9bb4a6e2%3Ag%3AL0oAAOSw8o1d9Buy&amp;itmprp=enc%3AAQAKAAAA8FkggFvd1GGDu0w3yXCmi1dtCKYHNcyWuMRUj8T5ehPTEC1JaqnqRoKtRNVbntuKAtXAxemdcVlhCT0wqWEt26M%2BuXO6Ee%2BtG5lel%2Bpz8RD3NnURr01vbZWZvw8F92OU1T%2FcoP46%2BXpkXYjNB7EZnzyPypBIsc9Ps4tRSMhYZ8Fj38jQSGxYKugJzhAglueVPvsgK10%2F2XROVmecATmvdzLVFwH6f7zYHxTuxdTZSOGl9d6avQwDPhveNBdmb324F3GA1bm%2BUFhuhwwb%2BpI2OIgtEeo%2BKRj5JB5k1DAXxex0eh8Y%2BbVeId58mLvfdDy%2FtQ%3D%3D%7Ctkp%3ABk9SR6CcqqHtZQ&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>THE GRIMOIRE OF TIAMAT by Asenath Mason (Hand Numbered Hardcover) #11</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $245.99<br>
+                        
+                            <span style="color: #00ffe7;">Description:</span>
+                            <span>New (Other)</span><br>
+                        
+                        <a href="https://www.ebay.com/itm/126978794103?_skw=grimoire&amp;itmmeta=01JXN1AHQ9B4PXAHJGFFN20KJM&amp;hash=item1d9086a277%3Ag%3ADMgAAeSwd1dnyhO4&amp;itmprp=enc%3AAQAKAAAA8FkggFvd1GGDu0w3yXCmi1d1gGKYJKZxhAmhnXt8ObMehOLak3dPVx4aoVJquxmye2RJCpkAPXN0sZ2xCKrvtUlKdRXasVJLpXZiognAQd6q3tYAP%2B1yGB2vgTbOH7i4W%2BphbBV5ITsWWhu%2FM0sp%2FaBn97NqvHAv%2FHkzeGd5qo0n7SJbb7GaZ6YSLIj9vs2FaM1vnAfojdbEthCfIq2m7w%2FQPgFRq6U2PZg0QvtxyEeQiVDyFqgsf4n%2B23JzS2V4S1q0R5kyJNdQjcYth85ceT%2FmaKgm%2FUwcekdQkpYxN48qtCfxHwbQo3mCbU0Eah%2FIUQ%3D%3D%7Ctkp%3ABFBMopyqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>Excellent Booke Of The Arte Of Magicke Scarlet Imprint PB Book Occult Grimoire</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $80.00<br>
+                        
+                            <span style="color: #00ffe7;">Description:</span>
+                            <span>Pre-Owned</span><br>
+                        
+                        <a href="https://www.ebay.com/itm/127128967801?_skw=grimoire&amp;itmmeta=01JXN1AHQ9NYDKT4P7Z75VFQKG&amp;hash=item1d997a1a79%3Ag%3Al54AAOSw9uhoL4sB&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1dNB4AdFJy84pMHUgcQ88EJPSnerhdzYVJuoMydxDdDCTcJm%2BvjadRrxCFL2U8lP2CPPjTrW%2B6pdSoGeHApFDX1%2BEjS73s2EE5MFJ%2Bl8M3Zm%2BnDxFIMEzahLQ9RIneW7zXvcnWLi5MoCLCVD7qb%2Fc%2FDkYYVIFOQID6PrIRwuSKHdKcaEarpJMkwanTAkMXBZUVyxWeifaGedt2l4zmviwYtdWdTJnm1oLmAxEKnLUUCGV3nk1dF4DYjDs5hgheL8OPo0BWUDIK0cRJykjd7S5vC%7Ctkp%3ABFBMopyqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>Archaelus Baron Kingdoms of Flame Black Magick Grimoire Ixaxaar 1st Edition HC</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $399.99<br>
+                        
+                            <span style="color: #00ffe7;">Description:</span>
+                            <span>Pre-Owned</span><br>
+                        
+                        <a href="https://www.ebay.com/itm/127166188196?_skw=grimoire&amp;itmmeta=01JXN1AHQ9JGQEDP7K9D6SYYJX&amp;hash=item1d9bb20aa4%3Ag%3AoAAAAeSwJ4VoRzzq&amp;itmprp=enc%3AAQAKAAAA8FkggFvd1GGDu0w3yXCmi1fxZAQd62uJE2%2FrvVImRp82vtepP9xR7KfquD%2FH4%2F6oIQEElpDrbHY6eMnMmycTBjv0tCpM4VQl8C2MGnPmPVfdHbrWNdudJOlZWD7QRt1e1ZntN65KOIjHBu6ICOTwz2sviEtgCgextx8qSbvt%2BHzh%2FZnPuDDmBYxTJw96Txdc%2FeMRth9xNLcg31nKYvBzDlfMDFkSNiTw5LxI0UWC5R7iihbOuGljJhdi%2FWuRncKHfFiXDDYnRb1ELBvwbNg9ilIl9Ous0cd3IQvmYpbDJ2ZKodUUNOYmWoaj%2F8uJ8w%2FzlQ%3D%3D%7Ctkp%3ABFBMopyqoe1l&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>New ListingBuffy the Vampire Slayer - The Official Grimoire ... by Andrea Robinson Hardback</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $38.59<br>
+                        
+                            <span style="color: #00ffe7;">Description:</span>
+                            <span>Pre-Owned</span><br>
+                        
+                        <a href="https://www.ebay.com/itm/316979111029?_skw=grimoire&amp;itmmeta=01JXN1AHQ90X7PR5AZZA8S51E6&amp;hash=item49cd6d6475%3Ag%3AwH4AAeSw14BoS2cq&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1c2rKAH2GyQNG%2Bm1ll7njeNzmChCDbXGdZYJft5r%2BaZ6p0AfG%2BAWYm8N%2FErZhPhsCYXwJYtFbnzEekmNUv3uZV0mozRJ9ZyTs5olfELY4zZ3f7f3eU6wK19zWwdXFI%2BtvJi1gljFDzXq%2FzhFzKbc6wUmeznYAonw4upxaq0MVUVLIvUYpP82FgubnjC0CCAdDvjrkMJ2JEjeWDvjQzhnaKFx%2FimHWfEmfaB21W4InpRpV1UBcoTTSo3g8RUwl%2BLaV%2BDVLbo4ZltquZai3cxySsF%7Ctkp%3ABk9SR6KcqqHtZQ&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>Mystic Grimoire of Mighty Spells and Rituals by Frater Malak (Hardcover) 1976</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $44.95<br>
+                        
+                            <span style="color: #00ffe7;">Description:</span>
+                            <span>Pre-Owned</span><br>
+                        
+                        <a href="https://www.ebay.com/itm/376085440035?_skw=grimoire&amp;itmmeta=01JXN1AHQ95BNYC1NNNMCQH75R&amp;hash=item5790706623%3Ag%3AdgYAAeSwHzRn3GGK&amp;itmprp=enc%3AAQAKAAAA4FkggFvd1GGDu0w3yXCmi1dBk%2BgRuJfrFfb5wFEM%2BVtEhMVyqqQNiBPMJJTkTVu%2FfuqMOA4y52fQP28ZkUnFhlCw5Zz61vkmJh5RsCePI%2BNA1vxz4gpI8mCkvvYgUvfr24wuRt7a%2BJcmcBc7XonQswQWliwUXKMym2qBqSlC6KEUDC7S2Xf3d46GOgzxzZq%2BXWpo%2FEpFqTw61jesqlrqBVTG7YTWUDCweQl5sHhG%2F%2B1BmAn%2Bm3EyEeBRinw8kwRlPWnDjizLd758XhBf7keoCq8qnAnjNhvyJ3noNjJbX1rC%7Ctkp%3ABk9SR6KcqqHtZQ&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>Book 1 &amp; 2 Sinister Forces A Grimoire American Political Witchcraft 1st Editions</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $150.00<br>
+                        
+                            <span style="color: #00ffe7;">Description:</span>
+                            <span>Pre-Owned</span><br>
+                        
+                        <a href="https://www.ebay.com/itm/286637530705?_skw=grimoire&amp;epid=46744004&amp;itmmeta=01JXN1AHQ94H0V3C7FJ7J6WQEP&amp;hash=item42bced9e51%3Ag%3ATy4AAOSwvd1oR1Ms&amp;itmprp=enc%3AAQAKAAAAwFkggFvd1GGDu0w3yXCmi1dbaIWEwpdkVbfZzxXTNbPC5i%2BFWvECnDcL3kO1hHmIzUFFXGFcQthcFKfCbSw2W%2FvVxg19NtdrhIXUVTWZ%2FF66nNHau1DwDKrrCe1q%2FYnoELBbnvt4qnRtNnq1o6fP%2FtspXrb7w%2FC8A%2FwzfCJbl4xIeuk4DOPMURsQRoGWVZufgy8ybFlDLP06XEZ1sAuM4hLW3ty0yJxVJczyC3h3OHUCq27lkTqr8c9sLGl8yOGk4Q%3D%3D%7Ctkp%3ABk9SR6ScqqHtZQ&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+                <li>
+                    <span class="matrix"><strong>Grand Grimoire Trident Books Library Leather Edition</strong></span><br>
+                    
+                    <div class="price-block">
+                        <span style="color: #00ff99;">eBay Price:</span>
+                        $1000.00<br>
+                        
+                            <span style="color: #00ffe7;">Description:</span>
+                            <span>New (Other)</span><br>
+                        
+                        <a href="https://www.ebay.com/itm/306346041106?_skw=grimoire&amp;itmmeta=01JXN1AHQ932HXS8TEXM3GHJQE&amp;hash=item4753a59f12%3Ag%3AvegAAOSw6ONoSMME&amp;itmprp=enc%3AAQAKAAAA0FkggFvd1GGDu0w3yXCmi1fAQQp%2FpVFGejFwr0WShzGwSCUBpj9CeBx%2F3ogUEaOLhoF8iwH11PlgSRvhNtZ%2BSlovSCJ9lg3%2FyWwDQGIGQrWfTLYb16JBqzXOOTcRuZHYlKs88%2FfaKOQYUwQ0oeTaVEQtDOlUcPAc4sLxuEoLUaKgd%2B%2FZd3N4j3MN01KVBThi9CO6Vs8mtHICRpWPj8a%2B3--o%2F7RtSNKITMoMAIVqOgccPkP1jcE%2F5VXGfzbvvb2d%2FFYuiAEW3pWfneOiYlIfs2M%3D%7Ctkp%3ABk9SR6ScqqHtZQ&amp;LH_BIN=1&amp;LH_ItemCondition=4" target="_blank">View on eBay</a>
+                    </div>
+                </li>
+            
+            </ul>
+        </section>
+    </div>
+
+    <script>
+    // Matrix rain effect
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+    const letters = "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const fontSize = 18;
+    let columns = Math.floor(width / fontSize);
+    let drops = Array(columns).fill(1);
+
+    function drawMatrix() {
+        ctx.fillStyle = "rgba(15,32,39,0.08)";
+        ctx.fillRect(0, 0, width, height);
+        ctx.font = fontSize + "px 'Share Tech Mono', monospace";
+        for (let i = 0; i < drops.length; i++) {
+            const text = letters[Math.floor(Math.random() * letters.length)];
+            ctx.fillStyle = "#00ff99";
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    setInterval(drawMatrix, 50);
+
+    window.addEventListener('resize', () => {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        columns = Math.floor(width / fontSize);
+        drops = Array(columns).fill(1);
+    });
+    </script>
+</body>
+</html>
