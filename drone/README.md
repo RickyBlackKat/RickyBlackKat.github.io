@@ -13,8 +13,37 @@ A parametric OpenSCAD frame designed to print on a **Bambu Lab P1P or P1S** in *
 | FPV camera | 19 mm "micro" camera on an M2 pivot, tilt 0–40° |
 | Plate gap | 30 mm (M3×30 standoffs) |
 | Battery | Top-mounted, 4S/6S 1100–1500 mAh, two straps |
-| Frame weight | Estimated 45–50 g in PETG at the settings below (62 g if printed solid, calculated from the STL volume) |
+| Frame weight | About 55–60 g for the PETG unibody and top plate (62 g if fully solid, calculated from the STL volume). With 6 walls on 4 mm plates the print is nearly solid. |
+| All-up weight | About 480–505 g with a 6S 1100 mAh battery; about 640–660 g with a full-size GoPro (see the weight budget below) |
 | Largest part | Unibody, 191×191×12 mm (the P1 bed is 256×256) |
+
+## Electronics and weight budget
+
+The weights below are typical for each class of part, not measurements of specific products. Weigh your own parts and adjust.
+
+| Part | Recommendation | Weight |
+|---|---|---|
+| Printed frame | Unibody and top plate in PETG | 57 g |
+| TPU accessories | Camera, antenna and GoPro mounts | 9 g |
+| Hardware | 4× aluminium M3×30 standoffs, about 28 M3 screws, nuts and grommets | 28 g |
+| Motors (×4) | 2207 or 2306, **1750–1950 KV on 6S**, or 2400–2700 KV on 4S | 128 g (32 g each) |
+| Flight stack | 30.5 mm F7 or F4 FC with a 45–55 A 4-in-1 ESC (BLHeli_32 or AM32) | 22 g |
+| Props (×4) | 5.1" tri-blade, e.g. 5.1×3.6×3 | 17 g |
+| FPV system, analog | 19 mm micro camera and a 25–800 mW VTX | 14 g |
+| FPV system, digital | DJI O3 / O4 or Walksnail-class air unit (instead of analog) | +22 g |
+| Receiver | ELRS 2.4 GHz nano receiver | 2 g |
+| Wiring | XT60 pigtail, low-ESR capacitor, wires and heat shrink | 12 g |
+| Battery strap and pad | | 4 g |
+| **Dry weight (no battery)** | | **~295 g analog / ~317 g digital** |
+| Battery | 6S 1100–1300 mAh (recommended) or 4S 1500 mAh | 170–200 g |
+| **All-up weight** | | **~480–505 g** |
+| GoPro (optional) | Full-size Hero, or a stripped "naked" GoPro at about 30 g | +155 g |
+
+**Power check:** a 2207 motor at about 1950 KV on 6S makes roughly 1.4–1.7 kg of static thrust with a 5.1" tri-blade. Four of them give about 6 kg in total, so:
+- about **12:1 thrust-to-weight** at around 500 g with no GoPro, which is good for freestyle;
+- about **9:1** with a full-size GoPro, which is still plenty, though it will feel heavier.
+
+The printed frame plus hardware weighs about 95 g. That is comparable to a typical carbon-fibre 5" frame (about 100–120 g with hardware), so the printed frame doesn't cost you weight. What it costs you is stiffness and crash strength.
 
 ## Parts (`stl/`)
 
