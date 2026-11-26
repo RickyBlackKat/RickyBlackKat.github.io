@@ -3,6 +3,9 @@ BATT_Y=float(sys.argv[1]) if len(sys.argv)>1 else -14.25
 GOPRO=float(sys.argv[2]) if len(sys.argv)>2 else 0
 NOMOUNT=len(sys.argv)>3 and sys.argv[3]=='nomount'
 OUTF=sys.argv[4] if len(sys.argv)>4 else 'stability.json'
+RID=float(sys.argv[5]) if len(sys.argv)>5 else 0
+RID_Y=float(sys.argv[6]) if len(sys.argv)>6 else 0
+RID_Z=float(sys.argv[7]) if len(sys.argv)>7 else 30
 import numpy as np, re, json, math
 def load(fn):
     d=open(fn,'rb').read()
@@ -31,26 +34,46 @@ def cyl(name,m,c,d,h,kind='bought'):
     r=d/2; I=np.diag([m*(3*r*r+h*h)/12]*2+[m*r*r/2]); items.append((name,m,np.array(c,float),I,kind))
 def pt(name,m,c,kind='hardware'): items.append((name,m,np.array(c,float),np.zeros((3,3)),kind))
 mxy=116/math.sqrt(2); P=[(sx*mxy,sy*mxy) for sx in (-1,1) for sy in (-1,1)]
-pt_=8  # plate top (arm 5 + plate 3)
-box('ESC SpeedyBee BLS 55A',23.5,(0,0,pt_+5),(45.6,44,8))
-box('FC SpeedyBee F405 V4',10.5,(0,0,pt_+14.4),(41.6,39.4,7.8))
-box('VTX SpeedyBee TX800',5.6,(0,0,pt_+26.55),(28,28,5.5))
-box('Camera Caddx Ratel 2',5.9,(0,37,pt_+14),(19,20,19))
+pt_=8  # plate top (arm 5 + plate 3); top plate top = 43
+SRC={}
+def src(n, t): SRC[n]=t
+box('ESC SpeedyBee BLS 55A',23.5,(0,0,pt_+5),(45.6,44,8)); src('ESC SpeedyBee BLS 55A','retailer spec 23.5 g')
+box('FC SpeedyBee F405 V4',10.5,(0,0,pt_+14.4),(41.6,39.4,7.8)); src('FC SpeedyBee F405 V4','retailer spec 10.5 g')
+box('VTX SpeedyBee TX800',5.6,(0,0,pt_+26.55),(28,28,5.5)); src('VTX SpeedyBee TX800','retailer spec 5.6 g')
+box('Camera Caddx Ratel 2',5.9,(0,37,pt_+14),(19,20,19)); src('Camera Caddx Ratel 2','retailer spec 5.9 g')
 for i,(x,y) in enumerate(P): cyl(f'Motor XING2 2207 #{i+1}',31.6,(x,y,5+9.55),29.08,19.1)
+src('Motor XING2 2207','retailer spec 31.6 g incl. wires')
 for i,(x,y) in enumerate(P): cyl(f'Prop Gemfan 51433 #{i+1}',3.8,(x,y,27.6),129.3,1.0)
-box('Battery 6S 1200 (Tattu R-Line V5)',197,(0,BATT_Y,43+2+17),(40,78,34))
-box('GPS Matek M10Q-5883',8,(0,-69.25,43+25.05+6.2),(20,20,12.4))
-box('XT60 + 12AWG pigtail',8,(0,-76,43+2+4.2),(15.8,16,8.2))
-pt('Receiver RP1',2.2,(0,-30,31),'bought'); pt('VTX antenna (SMA)',6,(0,-50,26),'bought')
+src('Prop Gemfan 51433','retailer spec 3.8 g')
+box('Battery 6S 1200 (Tattu R-Line V5)',197,(0,BATT_Y,43+2+17),(40,78,34)); src('Battery 6S 1200 (Tattu R-Line V5)','retailer spec 197 g ±20')
+box('GPS Matek M10Q-5883',8,(0,-69.25,43+25.05+6.2),(20,20,12.4)); src('GPS Matek M10Q-5883','retailer spec 8 g')
+box('XT60 + 12AWG pigtail',8,(0,-76,43+2+4.2),(15.8,16,8.2)); src('XT60 + 12AWG pigtail','estimate')
+pt('Capacitor 35V 1000uF',5,(0,-28,pt_+4),'bought'); src('Capacitor 35V 1000uF','estimate')
+pt('Receiver RP1',2.2,(0,-30,pt_+12),'bought'); src('Receiver RP1','manufacturer 2.2 g incl. antenna')
+pt('VTX antenna (SMA) + MMCX pigtail',8,(0,-55,28),'bought'); src('VTX antenna (SMA) + MMCX pigtail','estimate')
+if RID: pt('Remote ID module',RID,(0,RID_Y,RID_Z),'bought'); src('Remote ID module','assumed')
 for sx in (-1,1):
-    for sy in (-1,1): pt('Standoff M3x30',1.25,(sx*16,sy*40,25))
-for (x,y) in P: pt('Motor screws 4x M3x8',4*0.55,(x,y,2.5)); pt('Prop nut M5',1.5,(x,y,29))
+    for sy in (-1,1):
+        pt('Standoff M3x30',1.25,(sx*16,sy*40,pt_+2+15),'hardware')
+        pt('Standoff screws M3x8 (2)',0.55,(sx*16,sy*40,3.5)); pt('Standoff screws M3x8 (2)',0.55,(sx*16,sy*40,44.5))
+        pt('Stack bolt M3x35 + nylock',2.0,(sx*15.25,sy*15.25,14)); pt('Stack bolt M3x35 + nylock',0.3,(sx*15.25,sy*15.25,29))
+src('Standoff M3x30','retailer spec 1.25 g'); src('Standoff screws M3x8 (2)','steel, ~0.55 g each'); src('Stack bolt M3x35 + nylock','steel, ~2.3 g')
+for (x,y) in P:
+    pt('Motor screws M3x8 (4)',4*0.55,(x,y,-0.5)); pt('Prop nut M5',1.5,(x,y,32.5))
+    r=88/math.sqrt(2); pt('Foot bolt M3x20 + nylock',1.25,(math.copysign(r,x),math.copysign(r,y),4)); pt('Foot bolt M3x20 + nylock',0.3,(math.copysign(r,x),math.copysign(r,y),12))
+src('Motor screws M3x8 (4)','steel, ~0.55 g each'); src('Prop nut M5','estimate'); src('Foot bolt M3x20 + nylock','steel, ~1.55 g')
 for a in (45,135,225,315):
-    r=math.radians(a); pt('Arm bolts 2x M3x12+nut',2*1.05,(31*math.cos(r),31*math.sin(r),6))
-for sx in (-1,1):
-    for sy in (-1,1): pt('Stack bolt M3x35+nut',2.3,(sx*15.25,sy*15.25,19)); pt('Standoff screws',1.1,(sx*16,sy*40,25))
-pt('Tower bolts',1.9,(0,-58,45)); [pt('Foot bolt M3x20+nut',2.0,(88/math.sqrt(2)*sx,88/math.sqrt(2)*sy,0)) for sx in (-1,1) for sy in (-1,1)]; pt('Wiring, capacitor, solder',12,(0,0,16)); pt('Battery straps x2',15,(0,BATT_Y,62)); pt('Battery pad + grommets',4,(0,BATT_Y,44))
-if GOPRO: box('GoPro HERO (with frame)',GOPRO,(0,40,43+3+12+9+20),(71,34,50),'bought')
+    r=math.radians(a)
+    for s_ in (-1,1):
+        px=31*math.cos(r)-s_*6*math.sin(r); py=31*math.sin(r)+s_*6*math.cos(r)
+        pt('Arm bolts M3x12 + nylock',1.0,(px,py,-1.5)); pt('Arm bolts M3x12 + nylock',0.3,(px,py,pt_+1.5))
+src('Arm bolts M3x12 + nylock','steel, ~1.3 g each')
+pt('Tower bolts M3x10 + nylock',2*1.15,(0,-58,45)); src('Tower bolts M3x10 + nylock','steel')
+pt('Grommets + camera M2 screws',3,(0,0,pt_+10)); src('Grommets + camera M2 screws','estimate')
+pt('Wires, solder, heat-shrink, ties',7,(0,0,pt_+8)); src('Wires, solder, heat-shrink, ties','estimate')
+pt('Battery straps x2 (Lumenier 20x250)',15,(0,BATT_Y,62)); src('Battery straps x2 (Lumenier 20x250)','retailer spec 7.5 g each')
+pt('Battery pad',3,(0,BATT_Y,44)); src('Battery pad','estimate')
+if GOPRO: box('GoPro HERO (with frame)',GOPRO,(0,40,43+3+12+9+20),(71,34,50),'bought'); src('GoPro HERO (with frame)','~154 g')
 M=sum(i[1] for i in items); cg=sum(i[1]*i[2] for i in items)/M
 I=np.zeros((3,3))
 for n,m,c,Ii,k in items:
@@ -103,6 +126,8 @@ groups={}
 for n,m,c,Ii,kk in items:
     key=re.sub(r' #\d+','',n); groups.setdefault(key,[0,kk]); groups[key][0]+=m
 res['groups']=groups
+res['items']=[(re.sub(r' #\d+','',n),float(m),[float(v) for v in c],kk) for n,m,c,Ii,kk in items]
+res['src']=SRC
 json.dump(res,open(OUTF,'w'),indent=1)
 print(f"AUW {M:.0f} g   CG x={cg[0]:.2f} y={cg[1]:.2f} z={cg[2]:.1f} mm")
 print(f"Ixx {I[0,0]/1e6:.3f}  Iyy {I[1,1]/1e6:.3f}  Izz {I[2,2]/1e6:.3f} kg*m^2 x1e-3 (g*mm^2/1e6)")

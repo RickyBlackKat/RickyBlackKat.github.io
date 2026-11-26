@@ -19,7 +19,7 @@ A parametric OpenSCAD frame designed to print on a **Bambu Lab P1P or P1S** in *
 | Battery | Top-mounted 6S 1100–1200 mAh, **up to 78 × 40 × 34 mm**, two straps |
 | Arms | 4 bolt-on arms, 3 × M3 bolts each, interchangeable. Each root is clipped to its own 90° sector, leaving 2 mm between neighbours. |
 | Frame weight | About 117 g printed: arms ≈80 g (4 × 20 g), plates ≈31 g, canopy ≈8 g, tower ≈7 g (from the STL volumes) |
-| All-up weight | **≈644 g** with a 6S 1200 mAh battery (calculated from CAD + published part weights); ≈801 g with a full-size GoPro. See [`STABILITY.md`](STABILITY.md). |
+| All-up weight | **≈648 g** with a 6S 1200 mAh battery (calculated from CAD + published part weights); ≈805 g with a full-size GoPro. See [`STABILITY.md`](STABILITY.md). |
 | Largest part | Top plate, 52 × 112 mm. Four arms (129 × 32 mm) fit on one plate. |
 
 ## Drawings and fit check
