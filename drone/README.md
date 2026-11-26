@@ -1,8 +1,12 @@
 # KAT-5: printable 5" FPV freestyle quad
 
-A parametric OpenSCAD frame designed to print on a **Bambu Lab P1P or P1S** in **PETG or PLA+**. The TPU accessories are optional.
+A parametric OpenSCAD frame designed to print on a **Bambu Lab P1P or P1S** in **PETG or PLA+**. The arms bolt on, so a broken one is a quick reprint. A canopy covers the electronics, and a rear tower holds the GPS and the battery connector.
 
-![assembly](img/assembly.png)
+| Assembled | Rear (GPS + XT60 tower) |
+|---|---|
+| ![assembly](img/assembly.png) | ![rear](img/rear.png) |
+
+![exploded](img/exploded.png)
 
 | Spec | Value |
 |---|---|
@@ -13,9 +17,10 @@ A parametric OpenSCAD frame designed to print on a **Bambu Lab P1P or P1S** in *
 | FPV camera | 19 mm "micro" camera on an M2 pivot, tilt 0–40° |
 | Plate gap | 30 mm (M3×30 standoffs) |
 | Battery | Top-mounted, 4S/6S 1100–1500 mAh, two straps |
-| Frame weight | About 55–60 g for the PETG unibody and top plate (62 g if fully solid, calculated from the STL volume). With 6 walls on 4 mm plates the print is nearly solid. |
-| All-up weight | About 480–505 g with a 6S 1100 mAh battery; about 640–660 g with a full-size GoPro (see the weight budget below) |
-| Largest part | Unibody, 191×191×12 mm (the P1 bed is 256×256) |
+| Arms | 4 bolt-on arms, 3 × M3 bolts each, interchangeable |
+| Frame weight | About 96 g printed: arms and plates ≈80 g, canopy ≈8 g, GPS/XT60 tower ≈8 g (calculated from STL volumes) |
+| All-up weight | About 520–550 g with a 6S 1100–1300 mAh battery; about 690 g with a full-size GoPro (see the weight budget below) |
+| Largest part | Arm, 126 × 32 mm. Four arms fit on one plate. |
 
 ## Electronics and weight budget
 
@@ -23,9 +28,11 @@ The weights below are typical for each class of part, not measurements of specif
 
 | Part | Recommendation | Weight |
 |---|---|---|
-| Printed frame | Unibody and top plate in PETG | 57 g |
+| Printed frame | 4 arms, centre plate, top plate (PETG) | 80 g |
+| Canopy + GPS/XT60 tower | PETG | 16 g |
 | TPU accessories | Camera, antenna and GoPro mounts | 9 g |
-| Hardware | 4× aluminium M3×30 standoffs, about 28 M3 screws, nuts and grommets | 28 g |
+| Hardware | 4× aluminium M3×30 standoffs, about 38 M3 screws, nuts and grommets | 34 g |
+| GPS + compass | M10, about 20–25 mm square | 10 g |
 | Motors (×4) | 2207 or 2306, **1750–1950 KV on 6S**, or 2400–2700 KV on 4S | 128 g (32 g each) |
 | Flight stack | 30.5 mm F7 or F4 FC with a 45–55 A 4-in-1 ESC (BLHeli_32 or AM32) | 22 g |
 | Props (×4) | 5.1" tri-blade, e.g. 5.1×3.6×3 | 17 g |
@@ -34,36 +41,41 @@ The weights below are typical for each class of part, not measurements of specif
 | Receiver | ELRS 2.4 GHz nano receiver | 2 g |
 | Wiring | XT60 pigtail, low-ESR capacitor, wires and heat shrink | 12 g |
 | Battery strap and pad | | 4 g |
-| **Dry weight (no battery)** | | **~295 g analog / ~317 g digital** |
+| **Dry weight (no battery)** | | **~348 g analog / ~370 g digital** |
 | Battery | 6S 1100–1300 mAh (recommended) or 4S 1500 mAh | 170–200 g |
-| **All-up weight** | | **~480–505 g** |
+| **All-up weight** | | **~520–550 g** |
 | GoPro (optional) | Full-size Hero, or a stripped "naked" GoPro at about 30 g | +155 g |
 
 **Power check:** a 2207 motor at about 1950 KV on 6S makes roughly 1.4–1.7 kg of static thrust with a 5.1" tri-blade. Four of them give about 6 kg in total, so:
-- about **12:1 thrust-to-weight** at around 500 g with no GoPro, which is good for freestyle;
+- about **11:1 thrust-to-weight** at around 535 g with no GoPro, which is good for freestyle;
 - about **9:1** with a full-size GoPro, which is still plenty, though it will feel heavier.
 
-The printed frame plus hardware weighs about 95 g. That is comparable to a typical carbon-fibre 5" frame (about 100–120 g with hardware), so the printed frame doesn't cost you weight. What it costs you is stiffness and crash strength.
+The bolt-on arms, canopy and tower add about 40 g over a one-piece frame. If you'd rather save that weight, the canopy is optional; the quad flies the same without it.
 
 ## Parts (`stl/`)
 
 | File | Qty | Material | Notes |
 |---|---|---|---|
-| `unibody.stl` | 1 | PETG / PLA+ | Bottom plate and arms in one piece. Print flat with the spines facing up. |
-| `top_plate.stl` | 1 | PETG / PLA+ | Has the battery-strap slots and a GoPro strap slot. |
+| `arm.stl` | 4 (+2 spares) | PETG / PLA+ | Print flat, spine up. All four arms are identical. |
+| `bottom_plate.stl` | 1 | PETG / PLA+ | Centre plate. The arms bolt underneath it. |
+| `top_plate.stl` | 1 | PETG / PLA+ | Battery-strap slots, GoPro strap slot, and a rear tab for the tower. |
+| `canopy.stl` | 1 | PETG / PLA (or TPU) | Shell between the plates with a camera window, vents, USB access and the engraved name. Print upright. A silk or matte PLA looks best; TPU survives crashes. |
+| `gps_xt60_mount.stl` | 1 | PETG | XT60 socket holder with a GPS platform on top. Print upright. |
 | `cam_mount.stl` | 1 | TPU 95A | Clamps under the two front standoffs. |
 | `antenna_mount.stl` | 1 | TPU 95A | Clamps under the two rear standoffs. Holds the VTX SMA connector and two ELRS antenna tubes. |
 | `gopro_mount.stl` | 1 | TPU 95A | 3-prong mount at a 20° tilt, strapped to the front of the top plate. |
-| `standoff.stl` | 4 | PETG | Optional. M3×30 aluminium standoffs are stiffer and preferred. |
+| `standoff.stl` | 4 | PETG | Optional. Too fat to fit inside the canopy, so use M3×30 aluminium standoffs (5–5.5 mm hex) if you fit the canopy. |
 
 ## Print settings (Bambu Studio)
 
-**PETG / PLA+ parts (unibody, top plate):**
+**PETG / PLA+ structural parts (arms, plates, tower):**
 - 0.4 mm nozzle, 0.2 mm layers.
 - **6 walls**, 5 top and 5 bottom layers. The walls carry the load, so don't skimp on them.
-- 40% gyroid infill. The unibody ends up close to solid anyway.
+- 40% gyroid infill. The arms end up close to solid anyway.
 - Print flat. Layer lines then run along the arms, which is the strong direction for crash loads.
 - Use a textured PEI plate, no supports and no brim.
+
+**Canopy:** 3 walls (it's 1.2 mm thick), no infill needed, upright with no supports. The window tops bridge fine.
 - PETG: 245 °C nozzle, 70 °C bed, part fan at about 40%. PLA+: 215 °C nozzle, 55 °C bed.
 
 **TPU parts:**
@@ -75,7 +87,9 @@ The printed frame plus hardware weighs about 95 g. That is comparable to a typic
 
 - 16× M3×8 screws for the motors. **Check that the screw tips don't touch the motor windings.** Use 4 mm of thread into the motor at most.
 - 4× M3×30 standoffs, plus 8× M3×8 screws to fix them to the plates.
-- 4× M3×20–25 screws and nylon nuts for the stack, with soft-mount grommets.
+- **Arms:** each arm takes 3 bolts. One is a stack bolt (below). The other two are 8× M3×10 with nylock nuts on top of the centre plate.
+- **Stack:** 4× M3×30–35 screws, from under the arms up through the arm, the centre plate and the stack, with soft-mount grommets and nylock nuts on top.
+- **Tower:** 2× M3×10 with nylock nuts for the GPS/XT60 tower.
 - 2× M2×6 screws for the camera pivot.
 - 1× M5 GoPro thumbscrew.
 - 2× 20 mm battery straps, a grippy battery pad, and zip ties for the motor wires (there are slots in each arm).
@@ -83,27 +97,33 @@ The printed frame plus hardware weighs about 95 g. That is comparable to a typic
 ## Assembly
 
 1. Bolt the motors to the arm pads, with the screw heads underneath. Run the motor wires along the arm spine and zip-tie them through the arm slots.
-2. Mount the ESC and FC on the 30.5 mm stack holes with soft-mount grommets.
-3. Put the TPU camera mount over the front standoff holes and the antenna mount over the rear ones. Then screw the standoffs down through them.
-4. Fit the camera between the cradle walls with the two M2 pivot screws. Set the tilt to about 25–35° for freestyle. The TPU walls hold the angle by friction.
-5. Fit the VTX SMA connector through the rear tab, then push the ELRS antenna leads into the two angled tubes.
-6. Bolt on the top plate and strap the GoPro mount to its front slot. The battery goes behind it, held by two straps.
+2. Hold each arm under the centre plate and bolt it with its two M3×10 bolts. The four stack bolts go up from underneath through the arm roots and the plate, then carry the ESC and FC on soft-mount grommets.
+3. **Replacing an arm:** remove its 2 bolts and its stack bolt, swap the arm, and bolt it back up. You don't need to take the stack off; the other three stack bolts hold it.
+4. Put the TPU camera mount over the front standoff holes and the antenna mount over the rear ones. Then screw the standoffs down through them.
+5. Fit the camera between the cradle walls with the two M2 pivot screws. Set the tilt to about 25–35° for freestyle. The TPU walls hold the angle by friction.
+6. Fit the VTX SMA connector through the rear tab, then push the ELRS antenna leads into the two angled tubes.
+7. Slide the canopy down over the standoffs, sitting on the centre plate, before fitting the top plate. Line the USB window up with your flight controller's port.
+8. Bolt on the top plate. Then bolt the GPS/XT60 tower to the rear tab, with the arrow on the GPS pointing forward.
+9. Run the XT60 pigtail out of the canopy's rear opening, up behind the top plate, and in through the tower's front wire hole. Push the XT60 into its pocket with the socket facing back, then zip-tie it through the slot.
+10. Zip-tie or tape the GPS into the platform. Strap the GoPro mount to the front slot. The battery goes between them, held by two straps, and plugs into the XT60 at the back.
 
 ## Change the design
 
 Every dimension is a parameter at the top of `kat5.scad`: wheelbase, plate thickness, spine height, motor pattern, standoff height, camera size and so on. To re-export a part:
 
 ```sh
-openscad -D 'part="unibody"' -o stl/unibody.stl kat5.scad
+openscad -D 'part="arm"' -o stl/arm.stl kat5.scad
+openscad -D 'part="exploded"' kat5.scad      # preview the exploded view
 ```
 
 Useful changes:
 - **3" build:** set `wheelbase = 140`, `prop_d = 76`, `motor_spacing = 12`, `motor_hole_d = 2.2`, `stack_spacing = 20` and `stack_hole_d = 2.2`. Shrink the body to fit.
-- **Stiffer arms:** raise `rib_h_root` to 10–12, or `plate_t` to 5. The model is designed for PETG, which is about 10× less stiff than carbon fibre, so the arm spines provide most of the stiffness.
-- **More camera room:** increase `standoff_h`.
+- **Stiffer arms:** raise `spine_h_peak` to 10–12, or `arm_t` to 5. The model is designed for PETG, which is about 10× less stiff than carbon fibre, so the arm spines provide most of the stiffness.
+- **More camera room:** increase `standoff_h`. The canopy height follows it automatically.
+- **Bigger GPS:** set `gps_size` to your module's width.
 
 ## Honest limitations
 
-- **Stiffness:** a printed frame will never be as stiff as a carbon fibre one. Expect to lower the D-term and add filtering in Betaflight if you see oscillation. Check the gyro trace with Blackbox before you push the PIDs.
-- **Crashes:** printed arms break where carbon fibre would only scratch. Print a spare unibody to keep on hand.
+- **Stiffness:** a printed frame will never be as stiff as a carbon fibre one. Expect to lower the D-term and add filtering in your flight controller software if you see oscillation. Check the gyro trace with Blackbox before you push the PIDs.
+- **Crashes:** printed arms break where carbon fibre would only scratch. Keep two spare arms printed; a swap takes a few minutes.
 - **PLA:** plain PLA softens in summer heat and on warm motor mounts. Use PETG, or PLA+ at the very least.

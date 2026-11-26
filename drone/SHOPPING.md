@@ -10,10 +10,10 @@ Prices are rough US street prices from late 2025, for planning only. Check curre
 
 | Item | Spec | Qty | ≈ Price |
 |---|---|---|---|
-| PETG filament | 1 kg, any brand. The frame uses about 70 g, so there's plenty for spares. | 1 | $20 |
+| PETG filament | 1 kg, any brand. The frame, canopy and tower use about 110 g, so there's plenty for spare arms. | 1 | $20 |
 | TPU 95A filament | For the camera, antenna and GoPro mounts | 1 | $25 |
 | Aluminium standoffs | M3 × 30 mm | 4 (buy 8) | $8 |
-| M3 screw kit | M3 × 6/8/10/25 mm, plus nylock nuts | 1 kit | $12 |
+| M3 screw kit | M3 × 6/8/10 and 30–35 mm, plus about 20 nylock nuts (arms, stack, tower) | 1 kit | $12 |
 | M2 screws | M2 × 6 mm, for the camera pivot | 4 | (in kit) |
 | Battery straps | 20 mm wide, non-slip | 2 (buy 4) | $8 |
 | Battery pad | Grippy silicone or foam pad | 1 | $4 |
@@ -27,7 +27,7 @@ Prices are rough US street prices from late 2025, for planning only. Check curre
 | Props | 5.1" tri-blade, e.g. 5.1 × 3.6 × 3 | 6+ sets | $20 |
 | Batteries | **6S 1100–1300 mAh LiPo**, XT60 | 3 | $100–130 |
 | Capacitor | Low-ESR 35 V / 1000 µF (usually in the stack box) | 1 | – |
-| GPS + compass | M10 GPS with compass, about 20 mm, e.g. Matek M10Q-5883 class. Needed for ArduPilot's position hold and return-to-home. Stick it to the top plate behind the GoPro mount with double-sided tape. | 1 | $25–35 |
+| GPS + compass | M10 GPS with compass, about 20 mm, e.g. Matek M10Q-5883 class. Needed for ArduPilot's position hold and return-to-home. It sits on the printed GPS/XT60 tower at the back of the top plate (up to 25 mm square). | 1 | $25–35 |
 
 ## 3. Radio control ✈️
 
