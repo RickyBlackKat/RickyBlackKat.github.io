@@ -24,6 +24,7 @@ A parametric OpenSCAD frame designed to print on a **Bambu Lab P1P or P1S** in *
 
 ## Drawings and fit check
 
+- **[`drawings/KAT-5_drawings_print.pdf`](drawings/KAT-5_drawings_print.pdf):** the same 7 sheets in black on white, for printing. PNGs are in `drawings/print/`. On the wiring sheet, line styles replace the wire colours.
 - **[`drawings/KAT-5_drawings.pdf`](drawings/KAT-5_drawings.pdf):** 7 blueprint sheets, 17 × 11 in. PNGs of each sheet are in `drawings/`.
   1. General arrangement (top, front and side views) with numbered callouts
   2. Exploded isometric, parts list and fasteners

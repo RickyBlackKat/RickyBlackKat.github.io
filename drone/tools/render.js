@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs'); const path = require('path');
 (async () => {
-  const dir = path.join(__dirname, 'out');
+  const dir = path.join(__dirname, process.env.THEME === 'print' ? 'out_print' : 'out');
   const files = fs.readdirSync(dir).filter(f => /^K5_sheet\d+\.svg$/.test(f)).sort((a,b)=>parseInt(a.match(/\d+/))-parseInt(b.match(/\d+/)));
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1700, height: 1100 }, deviceScaleFactor: 1.6 });

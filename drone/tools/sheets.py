@@ -12,6 +12,12 @@ INK, THIN, FAINT, GRID, ACC = '#eef5ff', '#b9d3f5', '#7fa6dc', '#174684', '#ffd2
 FONT = "'DejaVu Sans Condensed','DejaVu Sans','Liberation Sans',sans-serif"
 MONO = "'DejaVu Sans Mono','Liberation Mono',monospace"
 DATE = '2026-11-26'
+BOXFILL, PROPC = '#123f7c', '#8fb4e6'
+PRINT = os.environ.get('THEME') == 'print'      # black on white for printing
+if PRINT:
+    BG = PAPER = BOXFILL = '#ffffff'
+    INK, THIN, FAINT, GRID, ACC, PROPC = '#000000', '#1a1a1a', '#555555', None, '#000000', '#444444'
+    OUT = os.path.join(HERE, 'out_print'); os.makedirs(OUT, exist_ok=True)
 N_SHEETS = 7
 
 # ---------------------------------------------------------------- geometry
@@ -114,8 +120,9 @@ def crosshair(v, x=0, y=0, n=8):
 def frame(title, dwg_no, sheet, scale='AS NOTED', subtitle=''):
     g = [f'<rect x="0" y="0" width="{W}" height="{H}" fill="{BG}"/>']
     # faint grid
-    for x in range(40, W - 39, 20): g.append(L(x, 40, x, H - 40, GRID, 0.5))
-    for y in range(40, H - 39, 20): g.append(L(40, y, W - 40, y, GRID, 0.5))
+    if GRID:
+        for x in range(40, W - 39, 20): g.append(L(x, 40, x, H - 40, GRID, 0.5))
+        for y in range(40, H - 39, 20): g.append(L(40, y, W - 40, y, GRID, 0.5))
     g.append(f'<rect x="20" y="20" width="{W-40}" height="{H-40}" fill="none" stroke="{INK}" stroke-width="1"/>')
     g.append(f'<rect x="40" y="40" width="{W-80}" height="{H-80}" fill="none" stroke="{INK}" stroke-width="2.2"/>')
     # zone ticks
@@ -149,7 +156,15 @@ def frame(title, dwg_no, sheet, scale='AS NOTED', subtitle=''):
     g.append(T(60, H - 52, 'GENERATED FROM kat5.scad (PARAMETRIC). DRAWING DIMENSIONS ARE NOMINAL CAD VALUES; PRINTED PARTS MAY NEED ±0.2 mm.', 10, anchor='start', color=FAINT, ls=0.5))
     return g
 
+RECOLOR = ['#ff6b6b', '#c9d2dc', '#ffd84d', '#5fe08a', '#6fc3ff', '#ffa24d', '#d39bff', '#ffd27a', '#b9d3f5', '#7fa6dc', '#eef5ff']
 def svg(body):
+    if PRINT:
+        out = ''.join(body)
+        for c in RECOLOR:
+            out = out.replace(f'"{c}"', '"#000000"')
+        out = out.replace('fill="#000000" stroke="#000000" stroke-width="1.4"/>', 'fill="#ffffff" stroke="#000000" stroke-width="1.4"/>')
+        return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" '
+                f'viewBox="0 0 {W} {H}" width="{W}" height="{H}">' + out + '</svg>')
     return (f'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" '
             f'viewBox="0 0 {W} {H}" width="{W}" height="{H}">' + ''.join(body) + '</svg>')
 
@@ -219,7 +234,7 @@ def assembly_view(v, view, show_props=True):
     g = []
     for c in COMPS:
         if c == 'props' and not show_props: continue
-        g.append(path(v, load(f'comp_{c}_{view}_all'), stroke=FAINT if c != 'props' else '#8fb4e6', sw=0.9,
+        g.append(path(v, load(f'comp_{c}_{view}_all'), stroke=FAINT if c != 'props' else PROPC, sw=0.9,
                       dash='5 3' if c != 'props' else '10 4 2 4'))
     for f in FRAME_PARTS:
         g.append(path(v, load(f'placed_{f}_{view}_all'), stroke=INK, sw=1.3))
@@ -279,7 +294,7 @@ def sheet1():
 # ================================================================ SHEET 2: exploded + BOM
 def sheet2():
     g = frame('EXPLODED ASSEMBLY + PARTS LIST', 'K5-101', 2, 'NTS', 'ISOMETRIC — NOT TO SCALE')
-    img = base64.b64encode(open(os.path.join(HERE, 'iso_lines.png'), 'rb').read()).decode()
+    img = base64.b64encode(open(os.path.join(HERE, 'iso_lines_print.png' if PRINT else 'iso_lines.png'), 'rb').read()).decode()
     ix, iy, iw = 60, 60, 760
     sc = iw / 1600; ih = 1700 * sc
     g.append(f'<image x="{ix}" y="{iy}" width="{iw}" height="{ih:.0f}" xlink:href="data:image/png;base64,{img}"/>')
@@ -461,7 +476,7 @@ def sheet5():
 
 # ================================================================ SHEET 6: wiring
 def box(x, y, w, h, title, sub=None, c=INK):
-    g = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="#123f7c" stroke="{c}" stroke-width="1.8"/>',
+    g = [f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="{BOXFILL}" stroke="{c}" stroke-width="1.8"/>',
          T(x + w / 2, y + 22, title, 14, weight='bold', ls=1.2)]
     if sub: g.append(T(x + w / 2, y + 38, sub, 10.5, color=THIN))
     return g
@@ -471,7 +486,11 @@ def pad(x, y, name, side='r', c=INK):
     g.append(T(x + (-10 if side == 'r' else 10), y + 4, name, 10.5, anchor='end' if side == 'r' else 'start', font=MONO, ls=0))
     return g
 
+WSTYLE = {'#ff6b6b': (2.8, None), '#c9d2dc': (1.3, None), '#ffd84d': (1.6, '7 3'), '#5fe08a': (1.6, '10 3 2 3'),
+          '#6fc3ff': (1.7, '2 3'), '#d39bff': (1.6, '12 3 2 3 2 3'), '#ffa24d': (1.0, None), '#ffffff': (1.2, None)}
 def wire(pts, c, w=2.2, label=None, dash=None):
+    if PRINT:
+        sw, ds = WSTYLE.get(c, (w, dash)); w = w if w >= 3.5 else sw; dash = ds if ds else dash; c = '#000000'
     d = 'M' + ' L'.join(f'{x},{y}' for x, y in pts)
     da = f' stroke-dasharray="{dash}"' if dash else ''
     g = [f'<path d="{d}" fill="none" stroke="{c}" stroke-width="{w}" stroke-linejoin="round"{da}/>']
@@ -561,12 +580,12 @@ def sheet6():
     apm = {'FR': (1, 'CCW'), 'RL': (2, 'CCW'), 'FL': (3, 'CW'), 'RR': (4, 'CW')}
     escpad = {'RR': 1, 'FR': 2, 'RL': 3, 'FL': 4}
     g.append(L(qx - d, qy - d, qx + d, qy + d, FAINT, 5)); g.append(L(qx + d, qy - d, qx - d, qy + d, FAINT, 5))
-    g.append(f'<rect x="{qx-22}" y="{qy-40}" width="44" height="80" rx="9" fill="#123f7c" stroke="{INK}" stroke-width="1.5"/>')
+    g.append(f'<rect x="{qx-22}" y="{qy-40}" width="44" height="80" rx="9" fill="{BOXFILL}" stroke="{INK}" stroke-width="1.5"/>')
     g.append(arrow(qx, qy - 52, -90, ACC, 12)); g.append(T(qx, qy - 60, 'FRONT', 11, color=ACC, weight='bold'))
     for k, (x, y) in pos.items():
         n, rot = apm[k]
-        g.append(f'<circle cx="{x}" cy="{y}" r="52" fill="none" stroke="#8fb4e6" stroke-width="1" stroke-dasharray="10 4 2 4"/>')
-        g.append(f'<circle cx="{x}" cy="{y}" r="21" fill="#123f7c" stroke="{INK}" stroke-width="1.8"/>')
+        g.append(f'<circle cx="{x}" cy="{y}" r="52" fill="none" stroke="{PROPC}" stroke-width="1" stroke-dasharray="10 4 2 4"/>')
+        g.append(f'<circle cx="{x}" cy="{y}" r="21" fill="{BOXFILL}" stroke="{INK}" stroke-width="1.8"/>')
         if rot == 'CCW':
             g.append(f'<path d="M{x+36},{y} A36,36 0 0 0 {x},{y-36}" fill="none" stroke="{ACC}" stroke-width="1.8"/>'); g.append(arrow(x, y - 36, 180, ACC, 9))
         else:
@@ -592,12 +611,12 @@ def sheet6():
     for i, t in enumerate(ptxt): g.append(T(lx, 660 + i * 17, t, 11, anchor='start', font=MONO, ls=0))
     cx2 = 1430
     g.append(T(cx2, 830, 'WIRE COLOURS', 13, anchor='start', weight='bold', color=ACC, ls=1.2)) if False else None
-    g.append(T(lx, 830, 'WIRE COLOURS', 13, anchor='start', weight='bold', color=ACC, ls=1.2))
+    g.append(T(lx, 830, 'WIRE STYLES' if PRINT else 'WIRE COLOURS', 13, anchor='start', weight='bold', color=ACC, ls=1.2))
     cl = [(C_RED, '+ POWER'), (C_BLK, 'GROUND'), (C_YEL, 'SIGNAL OUT (TX / VIDEO)'), (C_GRN, 'SIGNAL IN (RX / CONTROL)'),
           (C_BLU, 'I²C SDA'), (C_VIO, 'I²C SCL'), (C_ORG, 'MOTOR PHASES (3 PER MOTOR)')]
     for i, (c, t) in enumerate(cl):
         x = lx + (i % 2) * 260; y = 852 + (i // 2) * 17
-        g.append(L(x, y - 4, x + 26, y - 4, c, 3)); g.append(T(x + 34, y, t, 10.5, anchor='start'))
+        g += wire([(x, y - 4), (x + 26, y - 4)], c, 2.2); g.append(T(x + 34, y, t, 10.5, anchor='start'))
     return svg(g)
 
 # ================================================================ SHEET 7: fit check
