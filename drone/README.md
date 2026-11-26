@@ -18,14 +18,14 @@ A parametric OpenSCAD frame designed to print on a **Bambu Lab P1P or P1S** in *
 | Plate gap | 30 mm (M3×30 standoffs) |
 | Battery | Top-mounted 6S 1100–1200 mAh, **up to 78 × 40 × 34 mm**, two straps |
 | Arms | 4 bolt-on arms, 3 × M3 bolts each, interchangeable |
-| Frame weight | About 96 g printed: arms and plates ≈80 g, canopy ≈8 g, GPS/XT60 tower ≈8 g (calculated from STL volumes) |
-| All-up weight | About 520–550 g with a 6S 1100–1300 mAh battery; about 690 g with a full-size GoPro (see the weight budget below) |
+| Frame weight | About 117 g printed: arms ≈80 g (4 × 20 g), plates ≈31 g, canopy ≈8 g, tower ≈7 g (from the STL volumes) |
+| All-up weight | **≈614 g** with a 6S 1200 mAh battery (calculated from CAD + published part weights); ≈768 g with a full-size GoPro. See [`STABILITY.md`](STABILITY.md). |
 | Largest part | Top plate, 50 × 112 mm. Four arms (128 × 32 mm) fit on one plate. |
 
 ## Drawings and fit check
 
-- **[`drawings/KAT-5_drawings_print.pdf`](drawings/KAT-5_drawings_print.pdf):** the same 7 sheets in black on white, for printing. PNGs are in `drawings/print/`. On the wiring sheet, line styles replace the wire colours.
-- **[`drawings/KAT-5_drawings.pdf`](drawings/KAT-5_drawings.pdf):** 7 blueprint sheets, 17 × 11 in. PNGs of each sheet are in `drawings/`.
+- **[`drawings/KAT-5_drawings_print.pdf`](drawings/KAT-5_drawings_print.pdf):** the same 9 sheets in black on white, for printing. PNGs are in `drawings/print/`. On the wiring sheet, line styles replace the wire colours.
+- **[`drawings/KAT-5_drawings.pdf`](drawings/KAT-5_drawings.pdf):** 9 blueprint sheets, 17 × 11 in. PNGs of each sheet are in `drawings/`.
   1. General arrangement (top, front and side views) with numbered callouts
   2. Exploded isometric, parts list and fasteners
   3. Arm and centre plate, dimensioned
@@ -33,6 +33,10 @@ A parametric OpenSCAD frame designed to print on a **Bambu Lab P1P or P1S** in *
   5. Tower, camera mount, antenna mount, GoPro mount and VTX plate
   6. Wiring diagram for the SpeedyBee F405 V4 stack on ArduPilot, with motor order and starting parameters
   7. Fit-check report
+  8. Tolerances and fits: general tolerances, critical fits, and tolerance stack-ups for bolt lengths and the canopy
+  9. Stability and structure
+- **[`KAT-5_parts_list.pdf`](drawings/KAT-5_parts_list.pdf) / [`PARTS_LIST.md`](PARTS_LIST.md):** a printable, tickable parts list with links and QR codes.
+- **[`STABILITY.md`](STABILITY.md):** balance in four setups, landing stability, arm stiffness, vibration frequency and stress.
 - **[`FIT_CHECK.md`](FIT_CHECK.md):** each recommended part was modelled at its published size and checked for collisions against the frame in CAD.
 - **`tools/`:** the scripts that regenerate the drawings and the fit check from `kat5.scad`.
 
@@ -103,11 +107,11 @@ The bolt-on arms, canopy and tower add about 40 g over a one-piece frame. If you
 
 ## Hardware
 
-- **Motors:** 16× M3×8 screws. The M3×6/7 screws that come with most 2207 motors are too short for the 4 mm arm. **Check that the screw tips don't touch the motor windings**, and use 4 mm of thread into the motor at most.
+- **Motors:** 16× M3×8 screws, in the 1 mm counterbores under the arm. The M3×6/7 screws that come with most 2207 motors are too short. **Check that the screw tips don't touch the motor windings**, and use 4 mm of thread into the motor at most.
 - **VTX:** 4× M2 nylon screws and 1.5 mm spacers to fix it to the VTX plate.
 - 4× M3×30 standoffs, plus 8× M3×8 screws to fix them to the plates.
-- **Arms:** each arm takes 3 bolts. One is a stack bolt (below). The other two are 8× M3×10 with nylock nuts on top of the centre plate.
-- **Stack:** 4× M3×30–35 screws, from under the arms up through the arm, the centre plate and the stack, with soft-mount grommets and nylock nuts on top.
+- **Arms:** each arm takes 3 bolts. One is a stack bolt (below). The other two are 8× M3×12 with nylock nuts on top of the centre plate.
+- **Stack:** 4× **M3×35** screws (M3×30 is too short), from under the arms up through the arm, the centre plate and the stack, with soft-mount grommets and nylock nuts on top.
 - **Tower:** 2× M3×10 with nylock nuts for the GPS/XT60 tower.
 - 2× M2×6 screws for the camera pivot.
 - 1× M5 GoPro thumbscrew.

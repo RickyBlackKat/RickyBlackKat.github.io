@@ -25,7 +25,10 @@ Every recommended part was modelled at its published size and placed where it mo
 3. **The VTX had nowhere to mount.** A 20 × 20 mm VTX plate now sits on top of the stack.
 4. **The GPS platform intruded into its own pocket.** The platform stood 1 mm into the GPS pocket; it's fixed.
 5. **The motor wires had no way out of the canopy.** Four exits are now cut at the corners.
-6. **Prop-tip margin.** The wheelbase grew from 225 to 230 mm, giving 5.6 mm of prop-tip clearance with 5.1" props.
+6. **Bolt holes now Ø3.4 (were Ø3.3).** This leaves positional tolerance for two printed parts on one bolt; see drawing sheet 8.
+7. **Canopy height now 31.6 mm (was 32).** The canopy can no longer hold the top plate off the standoffs.
+8. **Stiffer arms.** A 5 mm plate and a 14 mm spine give about 8 mm of clearance under the props. See [STABILITY.md](STABILITY.md).
+9. **Prop-tip margin.** The wheelbase grew from 225 to 230 mm, giving 5.6 mm of prop-tip clearance with 5.1" props.
 
 ## Results
 

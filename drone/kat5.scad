@@ -33,7 +33,7 @@ $fn = 64;
 wheelbase      = 230;          // motor-to-motor diagonal (5.5 mm prop-tip clearance at 5.1")
 prop_d         = 129.5;        // 5.1" props (preview / clearance)
 
-arm_t          = 4;            // arm plate thickness
+arm_t          = 5;            // arm plate thickness (stiffness: first bending mode ~145 Hz)
 plate_t        = 3;            // centre (bottom) plate thickness
 top_t          = 3;            // top plate thickness
 standoff_h     = 30;           // M3 x 30 standoffs
@@ -51,27 +51,27 @@ paddle_r1      = 30;           // ...to this one (bolted under the plate)
 arm_w_tip      = 15;
 arm_bolt_r     = 31;           // two side-by-side M3 bolts at this radius
 arm_bolt_off   = 6;            //   ±6 mm either side of the arm centreline
-spine_w_top    = 4;            // stiffening spine on top of each arm
-spine_w_base   = 8;            //   flared base (acts as a fillet)
-spine_h_start  = 5;
-spine_h_peak   = 8;
-spine_h_tip    = 3;
+spine_w_top    = 6;            // stiffening spine on top of each arm
+spine_w_base   = 10;            //   flared base (acts as a fillet)
+spine_h_start  = 8;
+spine_h_peak   = 14;
+spine_h_tip    = 5;
 
 // Motor mount (16 x 16 M3)
 motor_pad_d    = 32;
 motor_spacing  = 16;
-motor_hole_d   = 3.3;
+motor_hole_d   = 3.4;           // M3 clearance (FDM holes print ~0.1 undersize)
 motor_shaft_d  = 7.5;
 bell_clear_r   = 17;
 
 // Flight stack (30.5 x 30.5 M3) — the stack bolts also hold the arms
 stack_spacing  = 30.5;
-stack_hole_d   = 3.3;
+stack_hole_d   = 3.4;
 
 // Standoffs (M3)
 so_x           = 16;
 so_y           = 40;
-so_hole_d      = 3.3;
+so_hole_d      = 3.4;
 
 // Camera
 cam_w          = 19;
@@ -107,7 +107,7 @@ module paddle_2d() hull() { translate([paddle_r0,0]) circle(d=arm_root_d); trans
 // Arm root holes in arm-local coordinates (arm along +X)
 module arm_root_holes() {
     hole_at([stack_r, 0], stack_hole_d);
-    for (s=[-1,1]) hole_at([arm_bolt_r, s*arm_bolt_off], 3.3);
+    for (s=[-1,1]) hole_at([arm_bolt_r, s*arm_bolt_off], 3.4);
 }
 
 // ---------------- Bolt-on arm (local: along +X, bottom at Z=0) ------
@@ -131,6 +131,8 @@ module arm() {
         arm_root_holes();
         translate([motor_r,0,0]) {
             for (sx=[-1,1], sy=[-1,1]) hole_at([sx*motor_spacing/2, sy*motor_spacing/2], motor_hole_d);
+            // 1 mm counterbores under the motor screws: M3x8 keeps 4 mm of thread in the motor
+            for (sx=[-1,1], sy=[-1,1]) translate([sx*motor_spacing/2, sy*motor_spacing/2, -1]) cylinder(d=6, h=2);
             hole_at([0,0], motor_shaft_d);
         }
         // zip-tie slots for the motor wires, either side of the spine
@@ -169,13 +171,14 @@ module top_plate() {
                 offset(strap_t/2 - 0.01) square([0.02, strap_w - strap_t], center=true);
         translate([0, 29, -1]) linear_extrude(top_t+2) offset(1.5) square([16, 0.5], center=true);  // GoPro strap
         translate([0, -6, -1]) linear_extrude(top_t+2) offset(3) square([10, 22], center=true);     // wire pass
-        for (sx=[-1,1]) hole_at([sx*8, tower_hole_y], 3.3);
+        for (sx=[-1,1]) hole_at([sx*8, tower_hole_y], 3.4);
     }
 }
 
 // ---------------- Canopy (between the plates) -----------------------
 canopy_wall = 1.2;
-canopy_h    = top_z - plate_top;          // 32 mm
+canopy_gap  = 0.4;                         // tolerance: canopy must stay shorter than the standoff + TPU-base stack
+canopy_h    = top_z - plate_top - canopy_gap;   // 31.6 mm
 module canopy() {      // local: Z = 0 sits on the centre plate
     difference() {
         linear_extrude(canopy_h) difference() { body_2d(); offset(delta=-canopy_wall) body_2d(); }
@@ -216,7 +219,7 @@ module gps_xt60_mount() {
                 translate([-px/2, (y0+y1)/2 - px/2, 25]) cube([px, px, 10]);
             }
         }
-        for (sx=[-1,1]) translate([sx*8, tower_hole_y, -1]) cylinder(d=3.3, h=10);
+        for (sx=[-1,1]) translate([sx*8, tower_hole_y, -1]) cylinder(d=3.4, h=10);
         // XT60 pocket: 16 x 8.2 mm body, mating face to the rear
         translate([-8.15, y1 - 1, 2]) cube([16.3, (y0 - y1) - 1, 8.5]);
         translate([-6, y0 - 3, 3.5]) cube([12, 5, 5.5]);                     // pigtail wires (front)
@@ -230,7 +233,7 @@ module gps_xt60_mount() {
 vtx_hole = 20;                          // 20 x 20 mm VTX mount (SpeedyBee TX800: 28 x 28 board)
 module vtx_plate() difference() {
     linear_extrude(1.6) offset(3) square(stack_spacing, center=true);
-    for (sx=[-1,1], sy=[-1,1]) hole_at([sx*stack_spacing/2, sy*stack_spacing/2], 3.3);
+    for (sx=[-1,1], sy=[-1,1]) hole_at([sx*stack_spacing/2, sy*stack_spacing/2], stack_hole_d);
     for (sx=[-1,1], sy=[-1,1]) hole_at([sx*vtx_hole/2, sy*vtx_hole/2], 2.2);
     hole_at([0,0], 12);
     for (s=[-1,1]) translate([s*12.5, 0, -1]) linear_extrude(4) offset(1) square([2, 14], center=true);

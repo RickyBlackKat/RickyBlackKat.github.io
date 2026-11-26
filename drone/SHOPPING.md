@@ -1,5 +1,7 @@
 # KAT-5 shopping list
 
+> A printable, tickable version with QR-code links is in [`drawings/KAT-5_parts_list.pdf`](drawings/KAT-5_parts_list.pdf) ([PARTS_LIST.md](PARTS_LIST.md)).
+
 Parts for the KAT-5 quad, chosen so the **radio, flight software, video ground station and charger carry over to the KAT-TR tilt-rotor**.
 
 Prices are rough US street prices from late 2025, for planning only. Check current prices and stock before you buy. Product names are examples of the right class of part; any equivalent with the same specs fits the frame.
@@ -13,7 +15,7 @@ Prices are rough US street prices from late 2025, for planning only. Check curre
 | PETG filament | 1 kg, any brand. The frame, canopy and tower use about 110 g, so there's plenty for spare arms. | 1 | $20 |
 | TPU 95A filament | For the camera, antenna and GoPro mounts | 1 | $25 |
 | Aluminium standoffs | M3 × 30 mm | 4 (buy 8) | $8 |
-| M3 screw kit | M3 × 6/8/10 and 30–35 mm, plus about 20 nylock nuts (arms, stack, tower) | 1 kit | $12 |
+| M3 screw kit | M3 × 8 / 10 / 12 / 35 mm, plus about 20 nylock nuts. See the fastener list in [PARTS_LIST.md](PARTS_LIST.md) | 1 kit | $12 |
 | M2 screws | M2 × 6 mm, for the camera pivot | 4 | (in kit) |
 | Battery straps | 20 mm wide, non-slip | 2 (buy 4) | $8 |
 | Battery pad | Grippy silicone or foam pad | 1 | $4 |

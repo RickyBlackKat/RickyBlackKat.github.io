@@ -22,7 +22,7 @@ module scene() {
   X([0,-62,150]) color("#e0c040") comp("xt60");
   X([0,-30,185]) color("#c8b77a") comp("gps");
   X([0,0,215]) color("#c0392b") comp("battery");
-  for (a=AW) X(rad(a,30) + [0,0,-45+14]) color("#b8bec6") rotate(a) translate([115,0,4]) cylinder(d=29.08, h=19.1);
+  for (a=AW) X(rad(a,30) + [0,0,-45+14]) color("#b8bec6") rotate(a) translate([115,0,5]) cylinder(d=29.08, h=19.1);
 }
 ANCH = [ // [item no, point]
  [1,  rad(45,30)+[0,0,-45] + [55,55,4]],
