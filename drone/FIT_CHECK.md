@@ -29,6 +29,7 @@ Every recommended part was modelled at its published size and placed where it mo
 5. **The motor wires had no way out of the canopy.** Four exits are now cut at the corners.
 6. **Bolt holes now Ø3.4 (were Ø3.3).** This leaves positional tolerance for two printed parts on one bolt; see drawing sheet 8.
 7. **Canopy height now 31.6 mm (was 32).** The canopy can no longer hold the top plate off the standoffs.
+11. **Landing feet.** Without them, the quad sat on its bolt heads: arm and stack bolts at the centre (3 mm proud), motor screws at the tips (2 mm proud). Four 8 mm TPU feet, each on its own M3 bolt, now keep every head at least 5 mm off the ground. They stay out of the motor and arm-root joints so those keep their stiffness. They clear the props and motors by at least 5 mm.
 10. **Stronger canopy.** The wall is now 2 mm (was 1.2), with a 3 × 1.6 mm flange round the top, flanges on the front and rear bottom edges, and four sleeves that clip over the standoffs and are webbed to the side walls. It weighs about 21 g. Checked clear of the camera cradle, the antenna mount, the standoffs, the ESC (1.2 mm), the FC, the VTX and the camera.
 8. **Stiffer arms.** A 5 mm plate and a 14 mm spine give about 8 mm of clearance under the props. See [STABILITY.md](STABILITY.md).
 9. **Prop-tip margin.** The wheelbase grew from 225 to 232 mm, giving 5.7 mm of prop-tip clearance with 5.1" props.

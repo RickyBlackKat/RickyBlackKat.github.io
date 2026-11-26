@@ -215,6 +215,7 @@ BOM = [  # item, qty, description, spec / material, file or source
     ('19', '1', 'RECEIVER ELRS 2.4 GHz', 'Radiomaster RP1/RP2', '13 x 11 x 3'),
     ('20', '2', 'BATTERY STRAP 20 mm', 'NON-SLIP', '—'),
     ('21', '1', 'FLIGHT CONTROLLER F405', 'SpeedyBee F405 V4', '41.6 x 39.4 x 7.8'),
+    ('22', '4', 'LANDING FOOT', 'TPU 95A, 3 WALLS 25%', 'stl/landing_foot.stl'),
 ]
 FASTENERS = [
     ('16', 'M3 x 8 SHCS', 'MOTOR → ARM (1 mm C\'BORE, 4 mm THREAD IN MOTOR)'),
@@ -224,10 +225,11 @@ FASTENERS = [
     ('2', 'M3 x 10 + NYLOCK', 'TOWER → TOP PLATE TAB'),
     ('2', 'M2 x 6', 'CAMERA PIVOT'),
     ('4', 'M2 NYLON + 1.5 mm SPACER', 'VTX → VTX PLATE'),
+    ('4', 'M3 x 20 + NYLOCK', 'LANDING FOOT → ARM (NUT ON SPINE)'),
     ('1', 'M5 THUMBSCREW', 'GOPRO'),
 ]
 
-FRAME_PARTS = ['arm', 'bottom_plate', 'cam_mount', 'antenna_mount', 'canopy', 'top_plate', 'gopro_mount', 'gps_xt60_mount', 'vtx_plate', 'standoffs']
+FRAME_PARTS = ['arm', 'feet', 'bottom_plate', 'cam_mount', 'antenna_mount', 'canopy', 'top_plate', 'gopro_mount', 'gps_xt60_mount', 'vtx_plate', 'standoffs']
 COMPS = ['esc', 'fc', 'vtx', 'camera', 'motors', 'props', 'battery', 'gps', 'xt60']
 
 def assembly_view(v, view, show_props=True):
@@ -277,7 +279,9 @@ def sheet1():
     g.append(dim(sd, (-84, 0), (46, 0), -24, '130'))
     g.append(dim(sd, (46, 5), (46, 43), 20, '38', orient='v'))
     g.append(leader(sd, (-69, 80.4), 'GPS ABOVE BATTERY', -80, -30, 11))
-    for n, p, dx, dy in [('5', (-80, 50), -60, 40), ('6', (40, 10), 90, 50), ('7', (-44, 20), -70, 60), ('16', (-69, 73), 40, -55), ('17', (-76, 48), -110, 10),
+    g.append(L(*sd.P(-150, -8), *sd.P(150, -8), THIN, 0.8, '14 4')); g.append(T(sd.P(150, -8)[0] + 6, sd.P(150, -8)[1] + 4, 'GROUND', 10, anchor='start'))
+    g.append(dim(sd, (62, -8), (62, 0), 14, '8', orient='v'))
+    for n, p, dx, dy in [('22', (62, -4), -60, 62), ('5', (-80, 50), -60, 40), ('6', (40, 10), 90, 50), ('7', (-44, 20), -70, 60), ('16', (-69, 73), 40, -55), ('17', (-76, 48), -110, 10),
                          ('2', (0, 5.5), 30, 70), ('10', (40, 25), 140, -40)]:
         ax, ay = sd.P(*p); g.append(balloon(n, ax, ay, ax + dx, ay + dy))
     # notes
@@ -287,9 +291,10 @@ def sheet1():
              '3. BALLOON NUMBERS REFER TO THE PARTS LIST ON SHEET 2.',
              '4. ARMS MOUNT UNDER THE CENTRE PLATE; 3 x M3 PER ARM. ROOTS CLIPPED TO 90° SECTORS: 2 mm BETWEEN ARMS.',
              '5. FIT CHECKED IN CAD AGAINST REAL PART SIZES — SEE SHEET 7. TOLERANCES: SHEET 8. STABILITY: SHEET 9.',
-             '6. NO ACTION CAMERA: REMOVE ITEM 8 AND SLIDE THE BATTERY FORWARD, FRONT EDGE FLUSH WITH ITEM 3 (SHEET 9).']
+                          '6. NO ACTION CAMERA: REMOVE ITEM 8 AND SLIDE THE BATTERY FORWARD, FRONT EDGE FLUSH WITH ITEM 3 (SHEET 9).',
+             '7. TPU FEET (22) ARE THE LOWEST POINT: ALL BOLT HEADS STAY ≥ 5 mm OFF THE GROUND.']
     for i, t in enumerate(notes):
-        g.append(T(70, 905 + i * 18, t, 12 if i else 13, anchor='start', weight='bold' if i == 0 else 'normal', color=INK if i else ACC))
+        g.append(T(70, 888 + i * 18, t, 12 if i else 13, anchor='start', weight='bold' if i == 0 else 'normal', color=INK if i else ACC))
     return svg(g)
 
 # ================================================================ SHEET 2: exploded + BOM
@@ -340,6 +345,7 @@ def sheet3():
     g.append(leader(v, (124, 8), '4x Ø3.4 +0.2/0 ON 16x16, Ø6x1 C\'BORE UNDER', 60, -60, 11))
     g.append(leader(v, (128, -9), 'MOTOR PAD Ø32', 50, 55, 11))
     g.append(leader(v, (8, 6.5), 'ROOT: 90° SECTOR −1 mm', -20, 150, 11))
+    g.append(leader(v, (88, 0), 'Ø3.4 FOOT BOLT (R88, THROUGH SPINE)', 10, -110, 11))
     g.append(dim(v, (3, -11), (3, 11), -8, '22', orient='v'))
     g.append(leader(v, (82, -6.6), 'MOTOR-WIRE ZIP SLOTS 3.2 x 1.8', 150, 95, 11))
     g.append(leader(v, (60, 3.2), 'SPINE (RAISED)', 10, -70, 11))
@@ -425,7 +431,7 @@ def sheet4():
 
 # ================================================================ SHEET 5: tower + mounts
 def sheet5():
-    g = frame('TOWER, MOUNTS, VTX PLATE', 'K5-203', 5, 'AS NOTED', 'ITEMS 5–9')
+    g = frame('TOWER, MOUNTS, VTX PLATE, FEET', 'K5-203', 5, 'AS NOTED', 'ITEMS 5–9, 22')
     s = 5.0
     tf = fit(['part_gps_xt60_mount_front_all'], 230, 300, s)
     g += [path(tf, load('part_gps_xt60_mount_front_all'))]
@@ -474,6 +480,13 @@ def sheet5():
     g += [path(at, load('part_antenna_mount_top_all')), path(at, load('part_antenna_mount_top_2.01'), sw=1.0)]
     g.append(T((at.left + at.right) / 2, at.top - 62, 'TOP', 13, weight='bold', ls=1))
     g.append(dim(at, (-16, -40), (16, -40), 12, '32 (M3)'))
+    ft = fit(['part_landing_foot_front_all'], 1470, 700, 5.0)
+    g += [path(ft, load('part_landing_foot_front_all'))]
+    g.append(vt(ft, 'ITEM 22 — LANDING FOOT (TPU)', '≈ 1.25:1', 70))
+    g.append(dim(ft, (79, 0), (97, 0), -12, '18'))
+    g.append(dim(ft, (97, 0), (97, 8), 12, '8', orient='v'))
+    g.append(T((ft.left + ft.right) / 2, ft.bot + 50, 'Ø3.4 THRU, Ø6.5 x 4.5 C\'BORE FROM BELOW', 10.5, color=THIN))
+    g.append(T((ft.left + ft.right) / 2, ft.bot + 66, 'LIPS 2.5 HIGH HUG THE ARM · PRINT PAD DOWN', 10.5, color=THIN))
     return svg(g)
 
 # ================================================================ SHEET 6: wiring
@@ -650,6 +663,7 @@ def sheet7():
         ('CAMERA ↔ CANOPY', '≥ 1', 'PASS', 'WINDOW OPEN TO THE BOTTOM'),
         ('MOTOR BELL ↔ ARM SPINE', '2.5', 'PASS', ''),
         ('PROP ↔ ARM SPINE (14 mm)', '≥ 5', 'PASS', 'TALLER SPINE (SHEET 9)'),
+        ('BOLT HEADS ↔ GROUND', '≥ 5', 'PASS', 'TPU FEET, 8 mm (NEW)'),
         ('PROP TIP ↔ CANOPY / BODY', '5.7', 'PASS', 'WHEELBASE 225 → 232, R10'),
         ('CANOPY SLEEVE ↔ STANDOFF', '0.2', 'SNUG', 'HEX 6.8 OVER 5.5 HEX'),
         ('PROP ↔ ANTENNA MOUNT', '≥ 3', 'PASS', ''),
@@ -750,7 +764,10 @@ def sheet9():
           path(sv, load('comp_battery_front_all'), sw=0.8, dash='5 3', stroke=FAINT), path(sv, load('comp_motors_front_all'), sw=0.8, dash='5 3', stroke=FAINT)]
     g.append(T(330, 630, 'FRONT VIEW — CG HEIGHT + TIP-OVER', 14, weight='bold', ls=1.2))
     zc = R['B']['cg'][2]; e = 131 / math.sqrt(2)
-    p0, pc, p1 = sv.P(-e, 0), sv.P(0, zc), sv.P(e, 0)
+    e = 97 / math.sqrt(2)
+    p0, pc, p1 = sv.P(-e, -8), sv.P(0, zc), sv.P(e, -8)
+    g.append(path(sv, load('placed_feet_front_all'), sw=1.0))
+    g.append(L(*sv.P(-120, -8), *sv.P(120, -8), THIN, 0.8, '14 4'))
     g.append(L(*sv.P(-110, 27.6), *sv.P(110, 27.6), THIN, 0.8, '10 4 2 4')); g.append(T(sv.P(110, 27.6)[0] + 6, sv.P(110, 27.6)[1] + 4, 'PROP PLANE', 10, anchor='start'))
     g.append(L(*pc, *p1, INK, 0.9, '6 3')); g.append(L(*pc, *p0, INK, 0.9, '6 3'))
     g.append(f'<circle cx="{pc[0]}" cy="{pc[1]}" r="6" fill="{BG}" stroke="{INK}" stroke-width="1.6"/>'); g.append(f'<circle cx="{pc[0]}" cy="{pc[1]}" r="2" fill="{INK}"/>')

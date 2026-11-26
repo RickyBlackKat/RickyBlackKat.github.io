@@ -8,20 +8,20 @@ The thrust centre is the geometric centre of the four motors.
 
 | Setup | All-up weight | CG fore/aft (+ = forward) | CG height | Motor-load imbalance | Tip-over angle |
 |---|---|---|---|---|---|
-| A: as drawn (battery at rear, GoPro mount fitted, no camera) | 631 g | −7.9 mm | 33.2 mm | ±9.6% | 69° |
-| **B: no action camera, GoPro mount removed, battery slid forward** | **628 g** | **−0.8 mm** | 33.1 mm | **±1.0%** | 70° |
-| C: full-size GoPro HERO (154 g) on the mount, battery at rear | 785 g | +1.5 mm | 43.7 mm | ±1.8% | 64° |
-| D: stripped "naked" GoPro (30 g), battery at rear | 661 g | −5.7 mm | 35.6 mm | ±7.0% | 68° |
+| A: as drawn (battery at rear, GoPro mount fitted, no camera) | 647 g | −7.7 mm | 32.3 mm | ±9.4% | 57° |
+| **B: no action camera, GoPro mount removed, battery slid forward** | **644 g** | **−0.8 mm** | 32.2 mm | **±1.0%** | 59° |
+| C: full-size GoPro HERO (154 g) on the mount, battery at rear | 801 g | +1.5 mm | 42.8 mm | ±1.8% | 53° |
+| D: stripped "naked" GoPro (30 g), battery at rear | 677 g | −5.6 mm | 34.7 mm | ±6.9% | 56° |
 
 - **Battery position.** Without an action camera, leave the GoPro mount off and slide the battery forward until its front edge is flush with the front of the top plate (setup B). With a full GoPro, keep the battery at the rear (setup C). Both are balanced to within about 1.5%.
 - **Naked GoPro (setup D).** The rear motors work about 7.5% harder. ArduPilot copes with that, but it costs some headroom. Either accept it or add a few grams of nose weight.
 - **CG height.** The CG sits 5.6 mm above the prop plane in setup B. That's normal for a top-mounted battery and has no effect on an actively stabilised quad.
-- **Landing stability.** The quad would have to tilt 64–70° before tipping over on landing.
+- **Landing stability.** The quad stands on four TPU feet, 8 mm tall at radius 88 mm. It would have to tilt 53–59° before tipping over on landing. CG heights in the table are measured from the arm underside; the feet sit 8 mm below that.
 
 ## Thrust
 
-- **Hover:** about 157 g per motor in setup B.
-- **Measured data point:** one retailer test table gives 1,021 g per motor at 60% throttle on 24 V with a 5.1" prop. That's about 6.5:1 thrust-to-weight at 60% throttle, so the quad has plenty of thrust.
+- **Hover:** about 161 g per motor in setup B.
+- **Measured data point:** one retailer test table gives 1,021 g per motor at 60% throttle on 24 V with a 5.1" prop. That's about 6.3:1 thrust-to-weight at 60% throttle, so the quad has plenty of thrust.
 - **Maximum:** about 1.6 kg per motor is my estimate, not a measured figure.
 
 ## Arms

@@ -6,6 +6,7 @@ function rad(a, r) = [cos(a)*r, sin(a)*r, 0];
 module X(off) translate(off) children();
 module scene() {
   for (a=AW) X(rad(a,30) + [0,0,-45]) { color("#4a7fc1") rotate(a) arm(); }
+  for (a=AW) X(rad(a,30) + [0,0,-45-22]) color("#e08a2c") rotate(a) landing_foot();
   color("#6f97c9") placed("bottom_plate");
   X([0,28,12]) color("#e08a2c") placed("cam_mount");
   X([0,62,28]) color("#333") comp("camera");
@@ -42,7 +43,8 @@ ANCH = [ // [item no, point]
  [16, [0,-30,185] + [10,-69,73]],
  [17, [0,-62,150] + [-8,-76,48]],
  [18, [0,0,215] + [-20,-30,60]],
- [21, [0,0,42] + [20.8,-10,22]]
+ [21, [0,0,42] + [20.8,-10,22]],
+ [22, rad(315,30)+[0,0,-67] + [62.2,-62.2,-6]]
 ];
 if (marker == 0) scene();
 else for (a = ANCH) if (a[0] == marker) translate(a[1]) color("red") sphere(r=3.5, $fn=24);

@@ -19,7 +19,7 @@ A parametric OpenSCAD frame designed to print on a **Bambu Lab P1P or P1S** in *
 | Battery | Top-mounted 6S 1100–1200 mAh, **up to 78 × 40 × 34 mm**, two straps |
 | Arms | 4 bolt-on arms, 3 × M3 bolts each, interchangeable. Each root is clipped to its own 90° sector, leaving 2 mm between neighbours. |
 | Frame weight | About 117 g printed: arms ≈80 g (4 × 20 g), plates ≈31 g, canopy ≈8 g, tower ≈7 g (from the STL volumes) |
-| All-up weight | **≈628 g** with a 6S 1200 mAh battery (calculated from CAD + published part weights); ≈785 g with a full-size GoPro. See [`STABILITY.md`](STABILITY.md). |
+| All-up weight | **≈644 g** with a 6S 1200 mAh battery (calculated from CAD + published part weights); ≈801 g with a full-size GoPro. See [`STABILITY.md`](STABILITY.md). |
 | Largest part | Top plate, 52 × 112 mm. Four arms (129 × 32 mm) fit on one plate. |
 
 ## Drawings and fit check
@@ -85,6 +85,7 @@ The bolt-on arms, canopy and tower add about 40 g over a one-piece frame. If you
 | `antenna_mount.stl` | 1 | TPU 95A | Clamps under the two rear standoffs. Holds the VTX SMA connector and two ELRS antenna tubes. |
 | `gopro_mount.stl` | 1 | TPU 95A | 3-prong mount at a 20° tilt, strapped to the front of the top plate. |
 | `vtx_plate.stl` | 1 | PETG | Bolts on top of the 30.5 mm stack and carries a 20 × 20 mm VTX (SpeedyBee TX800) on M2 nylon screws. |
+| `landing_foot.stl` | 4 (+2 spares) | TPU 95A | Under each arm, held by its own M3×20. These are the lowest point on the quad, so every bolt head stays at least 5 mm off the ground. Print pad down. |
 | `test_coupon.stl` | 1 | PETG | **Print this first** (about 10 minutes). It checks the motor holes, stack holes, M2 hole, camera width, XT60 opening and GPS pocket on your printer. |
 | `standoff.stl` | 4 | PETG | Optional. Too fat to fit inside the canopy, so use M3×30 aluminium standoffs (5–5.5 mm hex) if you fit the canopy. |
 
@@ -113,6 +114,7 @@ The bolt-on arms, canopy and tower add about 40 g over a one-piece frame. If you
 - **Arms:** each arm takes 3 bolts. One is a stack bolt (below). The other two are 8× M3×12 with nylock nuts on top of the centre plate.
 - **Stack:** 4× **M3×35** screws (M3×30 is too short), from under the arms up through the arm, the centre plate and the stack, with soft-mount grommets and nylock nuts on top.
 - **Tower:** 2× M3×10 with nylock nuts for the GPS/XT60 tower.
+- **Feet:** 4× M3×20 with nylock nuts. The bolt goes up through the foot (head recessed) and the arm, with the nut on top of the spine.
 - 2× M2×6 screws for the camera pivot.
 - 1× M5 GoPro thumbscrew.
 - 2× 20 mm battery straps, a grippy battery pad, and zip ties for the motor wires (there are slots in each arm).

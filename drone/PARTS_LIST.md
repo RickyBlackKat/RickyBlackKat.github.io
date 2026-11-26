@@ -15,6 +15,7 @@ Printable version: [`KAT-5_parts_list.pdf`](drawings/KAT-5_parts_list.pdf), with
 | 1 | `stl/vtx_plate.stl` | VTX plate | PETG | 4 walls, 100% |
 | 1 | `stl/cam_mount.stl` | Camera mount | TPU 95A | 3 walls, 25% |
 | 1 | `stl/antenna_mount.stl` | Antenna mount | TPU 95A | 3 walls, 25% |
+| 4 (+2) | `stl/landing_foot.stl` | Landing foot | TPU 95A | 3 walls, 25%, pad down |
 | 1 | `stl/gopro_mount.stl` | GoPro mount (only with an action camera) | TPU 95A | 3 walls, 25%, tree supports optional |
 
 ## Buy
@@ -52,6 +53,7 @@ Printable version: [`KAT-5_parts_list.pdf`](drawings/KAT-5_parts_list.pdf), with
 | 2 | M3 × 10 + nylock | tower → top-plate tab |
 | 2 | M2 × 6 | camera pivot |
 | 4 | M2 nylon + 1.5 mm spacer | VTX → VTX plate |
+| 4 | M3 × 20 + nylock | landing foot → arm (head recessed in the foot, nut on the spine) |
 | 1 | M5 thumbscrew | GoPro mount (only with an action camera) |
 
 ## Links

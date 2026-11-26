@@ -11,6 +11,7 @@ PRINTED=[ # qty, file, part, material, settings, grams each
  ('1','vtx_plate.stl','VTX plate','PETG','4 walls, 100%','2'),
  ('1','cam_mount.stl','Camera mount','TPU 95A','3 walls, 25%','2'),
  ('1','antenna_mount.stl','Antenna mount','TPU 95A','3 walls, 25%','2'),
+ ('4 (+2)','landing_foot.stl','Landing foot','TPU 95A','3 walls, 25%, pad down','2'),
  ('1','gopro_mount.stl','GoPro mount (only with an action camera)','TPU 95A','3 walls, 25%, tree supports optional','3'),
 ]
 # group, qty, item, spec, example, url, approx price (USD)
@@ -38,6 +39,7 @@ BUY=[
 FASTENERS=[('16','M3 × 8 socket head','motor → arm (1 mm counterbore, 4 mm in motor)'),('8','M3 × 12 + nylock','arm → centre plate'),
  ('4','M3 × 35 + nylock','stack bolts through arm roots (M3 × 30 is too short)'),('8','M3 × 8','standoffs, top + bottom'),
  ('2','M3 × 10 + nylock','tower → top-plate tab'),('2','M2 × 6','camera pivot'),('4','M2 nylon + 1.5 mm spacer','VTX → VTX plate'),
+ ('4','M3 × 20 + nylock','landing foot → arm (head recessed in the foot, nut on the spine)'),
  ('1','M5 thumbscrew','GoPro mount (only with an action camera)')]
 EXTRA=[('FAA DroneZone (registration)','https://faadronezone-access.faa.gov/'),('FAA list of Remote ID modules','https://uasdoc.faa.gov/listDocs'),
        ('KAT-5 files (STL, CAD, drawings)',REPO)]
@@ -67,7 +69,7 @@ tr{page-break-inside:avoid}
 .f{font-family:'DejaVu Sans Mono',monospace;font-size:7.4pt;white-space:nowrap}'''
 def build():
     h=[f'<html><head><meta charset="utf-8"><style>{CSS}</style></head><body>']
-    h.append(f'<div class="head"><div><h1>KAT-5 PARTS LIST</h1><div class="sub">5" FPV quad · printed frame · rev. B (bolt-on arms, 5 mm arm, Ø3.4 holes) · 2026-11-26</div></div>'
+    h.append(f'<div class="head"><div><h1>KAT-5 PARTS LIST</h1><div class="sub">5" FPV quad · printed frame · rev. C (sector-clipped arms, 2 mm canopy, TPU feet) · 2026-11-26</div></div>'
              f'<div style="text-align:center">{qr(REPO,70)}<div style="font-size:6.5pt">PROJECT FILES</div></div></div>')
     h.append('<p class="note">Tick each box as you buy or print. Prices are rough US street prices from late 2025 and will have changed; links go to example retailers, and any part with the same spec fits. Scan a QR code with your phone to open the link.</p>')
     h.append('<h2>1 · PRINT THESE (Bambu P1P / P1S)</h2><table><tr><th></th><th>QTY</th><th>FILE (stl/)</th><th>PART</th><th>MATERIAL</th><th>SETTINGS</th><th class="r">≈ g EACH</th></tr>')

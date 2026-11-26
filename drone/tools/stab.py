@@ -17,7 +17,7 @@ def mesh_props(fn):
     return V, cg, C
 # effective density (g/mm^3) = material density x print fill
 RHO0={'arm':1.27e-3*0.92,'bottom_plate':1.27e-3*0.92,'top_plate':1.27e-3*0.92,'canopy':1.27e-3,'gps_xt60_mount':1.27e-3*0.75,
-     'vtx_plate':1.27e-3,'cam_mount':1.21e-3*0.6,'antenna_mount':1.21e-3*0.6,'gopro_mount':1.21e-3*0.6}
+     'vtx_plate':1.27e-3,'feet':1.21e-3*0.7,'cam_mount':1.21e-3*0.6,'antenna_mount':1.21e-3*0.6,'gopro_mount':1.21e-3*0.6}
 RHO={k:v for k,v in RHO0.items() if not (NOMOUNT and k=='gopro_mount')}
 items=[]   # (name, mass g, cg, inertia about own cg 3x3 g*mm^2)
 for n,r in RHO.items():
@@ -49,7 +49,7 @@ for a in (45,135,225,315):
     r=math.radians(a); pt('Arm bolts 2x M3x12+nut',2*1.05,(31*math.cos(r),31*math.sin(r),6))
 for sx in (-1,1):
     for sy in (-1,1): pt('Stack bolt M3x35+nut',2.3,(sx*15.25,sy*15.25,19)); pt('Standoff screws',1.1,(sx*16,sy*40,25))
-pt('Tower bolts',1.9,(0,-58,45)); pt('Wiring, capacitor, solder',12,(0,0,16)); pt('Battery straps x2',15,(0,BATT_Y,62)); pt('Battery pad + grommets',4,(0,BATT_Y,44))
+pt('Tower bolts',1.9,(0,-58,45)); [pt('Foot bolt M3x20+nut',2.0,(88/math.sqrt(2)*sx,88/math.sqrt(2)*sy,0)) for sx in (-1,1) for sy in (-1,1)]; pt('Wiring, capacitor, solder',12,(0,0,16)); pt('Battery straps x2',15,(0,BATT_Y,62)); pt('Battery pad + grommets',4,(0,BATT_Y,44))
 if GOPRO: box('GoPro HERO (with frame)',GOPRO,(0,40,43+3+12+9+20),(71,34,50),'bought')
 M=sum(i[1] for i in items); cg=sum(i[1]*i[2] for i in items)/M
 I=np.zeros((3,3))
@@ -61,9 +61,10 @@ b=np.array([1,cg[1],cg[0],0]); T=np.linalg.solve(A,b)              # thrust frac
 dev=(T/0.25-1)*100
 prop_plane=27.6
 # tip-over on landing: contacts = arm undersides out to the pad edge (r=131 on the diagonals)
-e=132/math.sqrt(2)
+e=97/math.sqrt(2)   # outer edge of the TPU feet (r = 97) on the diagonals
 edges=[e-cg[1], e+cg[1], e-cg[0], e+cg[0]]
-tip=math.degrees(math.atan(min(edges)/cg[2]))
+GROUND=-8.0   # underside of the feet
+tip=math.degrees(math.atan(min(edges)/(cg[2]-GROUND)))
 # ---- arm beam: cantilever fixed at the plate edge (r=41), tip load at the motor (r=115)
 E=1800.0  # MPa = N/mm^2 (printed PETG, XY; Prusa 1.7-1.8 GPa)
 def section(r):

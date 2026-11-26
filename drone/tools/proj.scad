@@ -8,7 +8,7 @@ module V() {
 module part_by_name(n) {
   if (n=="arm") arm(); if (n=="bottom_plate") bottom_plate(); if (n=="top_plate") top_plate();
   if (n=="canopy") canopy(); if (n=="gps_xt60_mount") gps_xt60_mount(); if (n=="cam_mount") cam_mount();
-  if (n=="antenna_mount") antenna_mount(); if (n=="gopro_mount") gopro_mount(); if (n=="vtx_plate") vtx_plate();
+  if (n=="antenna_mount") antenna_mount(); if (n=="gopro_mount") gopro_mount(); if (n=="vtx_plate") vtx_plate(); if (n=="landing_foot") landing_foot();
 }
 module obj() { if (kind=="placed") placed(item); if (kind=="comp") comp(item, 0); if (kind=="part") part_by_name(item); }
 projection() V() intersection() { obj(); translate([-2500,-2500,lev]) cube(5000); }

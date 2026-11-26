@@ -57,6 +57,12 @@ spine_h_start  = 8;
 spine_h_peak   = 14;
 spine_h_tip    = 5;
 
+// Landing feet (TPU, one per arm, own M3 bolt — kept out of the motor and arm-root joints)
+foot_r         = 88;           // foot centre, radius from frame centre (spine is ~7 mm tall here)
+foot_len       = 18;           // along the arm
+foot_h         = 8;            // below the arm: all bolt heads clear the ground by ≥ 5 mm
+foot_lip       = 2.5;          // side lips that hug the arm edges (stop it twisting)
+
 // Motor mount (16 x 16 M3)
 motor_pad_d    = 32;
 motor_spacing  = 16;
@@ -137,9 +143,27 @@ module arm() {
             for (sx=[-1,1], sy=[-1,1]) translate([sx*motor_spacing/2, sy*motor_spacing/2, -1]) cylinder(d=6, h=2);
             hole_at([0,0], motor_shaft_d);
         }
+        hole_at([foot_r, 0], 3.4);                                   // landing-foot bolt (through the spine)
         // zip-tie slots for the motor wires, either side of the spine
         for (r=[58, 82], s=[-1,1]) translate([r, s*(spine_w_base/2 + 2.6), -1])
             linear_extrude(arm_t + 2) square([3.2, 1.8], center=true);
+    }
+}
+
+// ---------------- Landing foot (TPU; local = arm frame, Z = 0 at arm underside) --
+module foot_band_2d() intersection() { children(); translate([foot_r - foot_len/2, -30]) square([foot_len, 60]); }
+module landing_foot() {
+    difference() {
+        union() {
+            hull() {                                                  // tapered pad under the arm
+                translate([0,0,-1]) linear_extrude(1) foot_band_2d() offset(delta=1.6) arm_2d();
+                translate([0,0,-foot_h]) linear_extrude(0.01) offset(delta=-1.5) foot_band_2d() offset(delta=1.6) arm_2d();
+            }
+            linear_extrude(foot_lip) foot_band_2d()                    // lips either side of the arm
+                difference() { offset(delta=1.6) arm_2d(); offset(delta=0.25) arm_2d(); }
+        }
+        translate([foot_r, 0, -foot_h - 1]) cylinder(d=3.4, h=foot_h + 5);
+        translate([foot_r, 0, -foot_h - 1]) cylinder(d=6.5, h=4.5 + 1);           // bolt head recessed 4.5 mm
     }
 }
 
@@ -349,6 +373,7 @@ module dummy_motor() { color("silver") cylinder(d=29.08, h=19.1); color("silver"
 module dummy_prop()  color([0.2,0.6,1,0.25]) cylinder(d=prop_d, h=1);
 module assembly(show_canopy=true) {
     for (a = arm_angles) color("dimgray") rotate(a) arm();
+    for (a = arm_angles) color("orange") rotate(a) landing_foot();
     color("gray") translate([0,0,plate_z]) bottom_plate();
     color("orange") translate([0,0,plate_top]) cam_mount();
     color("orange") translate([0,0,plate_top]) antenna_mount();
@@ -374,6 +399,7 @@ module assembly(show_canopy=true) {
 // component by c mm on every side so a clearance can be tested.
 module placed(n) {
     if (n=="arm") for (a = arm_angles) rotate(a) arm();
+    if (n=="feet") for (a = arm_angles) rotate(a) landing_foot();
     if (n=="bottom_plate") translate([0,0,plate_z]) bottom_plate();
     if (n=="cam_mount") translate([0,0,plate_top]) cam_mount();
     if (n=="antenna_mount") translate([0,0,plate_top]) antenna_mount();
@@ -430,6 +456,7 @@ if (part == "gps_xt60_mount")  gps_xt60_mount();
 if (part == "standoff")        standoff();
 if (part == "vtx_plate")       vtx_plate();
 if (part == "test_coupon")     test_coupon();
+if (part == "landing_foot")    translate([-foot_r, 0, foot_h]) landing_foot();   // pad down, lips up
 if (part == "cam_mount")       cam_mount();
 if (part == "antenna_mount")   antenna_mount();
 if (part == "gopro_mount")     gopro_mount();
