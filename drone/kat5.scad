@@ -68,7 +68,7 @@ tpu_base_t     = 2;            // thickness of TPU accessory bases
 // Battery straps
 strap_w        = 22;           // slot length (fits 20 mm straps)
 strap_t        = 3.5;          // slot width
-strap_x        = 13.5;         // slot offset from centre
+strap_x        = 17;           // slot offset from centre (slots 34 mm apart, at the pack edges)
 strap_y        = 15;           // two straps at +/- this Y
 
 // Derived
