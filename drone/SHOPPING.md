@@ -23,9 +23,9 @@ Prices are rough US street prices from late 2025, for planning only. Check curre
 | Item | Spec / example | Qty | ≈ Price |
 |---|---|---|---|
 | Flight stack | **30.5 × 30.5 mm F405 or H743 FC with a 50–55 A 4-in-1 ESC that runs ArduPilot**, e.g. SpeedyBee F405 V4 stack. Check that your FC is on ArduPilot's supported-boards list. | 1 | $75–90 |
-| Motors | 2207, **1750–1950 KV for 6S**, 16 × 16 mm M3 bolt pattern | 4 (+1 spare) | $90–110 |
+| Motors | 2207, **1750–1950 KV for 6S**, 16 × 16 mm M3 bolt pattern, e.g. iFlight XING2 2207 1855 KV (Ø29.1 × 19.1 mm). Use M3×8 screws; the supplied ones are too short. | 4 (+1 spare) | $90–110 |
 | Props | 5.1" tri-blade, e.g. 5.1 × 3.6 × 3 | 6+ sets | $20 |
-| Batteries | **6S 1100–1300 mAh LiPo**, XT60 | 3 | $100–130 |
+| Batteries | **6S 1100–1200 mAh LiPo**, XT60, **no larger than 78 × 40 × 34 mm** (e.g. Tattu R-Line V5 1200, CNHL Black 1100) | 3 | $100–130 |
 | Capacitor | Low-ESR 35 V / 1000 µF (usually in the stack box) | 1 | – |
 | GPS + compass | M10 GPS with compass, about 20 mm, e.g. Matek M10Q-5883 class. Needed for ArduPilot's position hold and return-to-home. It sits on the printed GPS/XT60 tower at the back of the top plate (up to 25 mm square). | 1 | $25–35 |
 
@@ -45,7 +45,7 @@ Pick **one** option:
 | Item | Spec / example | Qty | ≈ Price |
 |---|---|---|---|
 | FPV camera | 19 mm "micro" analog camera, e.g. Caddx Ratel 2 or RunCam Phoenix 2 | 1 | $30 |
-| Video transmitter | 5.8 GHz, 25–800 mW, 20 × 20 mm, with an SMA connector (fits the rear antenna mount) | 1 | $25–40 |
+| Video transmitter | 5.8 GHz, 25–800 mW, **20 × 20 mm mount, 5 V input**, e.g. SpeedyBee TX800 (28 × 28 mm board, MMCX→SMA pigtail included). Sits on the printed VTX plate. | 1 | $25–40 |
 | VTX antenna | 5.8 GHz SMA, right-hand circular polarized | 1 | $10 |
 | Laptop receiver | **5.8 GHz UVC USB receiver.** It shows up as a webcam, e.g. Skydroid UVC or Eachine ROTG02 | 1 | $25–45 |
 

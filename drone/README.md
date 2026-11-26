@@ -10,17 +10,32 @@ A parametric OpenSCAD frame designed to print on a **Bambu Lab P1P or P1S** in *
 
 | Spec | Value |
 |---|---|
-| Layout | True-X, 225 mm wheelbase (motor to motor, diagonal) |
+| Layout | True-X, 230 mm wheelbase (motor to motor, diagonal), 50 × 92 mm body |
 | Props | 5" (up to 5.1") |
 | Motors | 22xx/23xx with a 16×16 M3 bolt pattern (2207, 2306, 2306.5) |
 | Flight stack | 30.5×30.5 M3 FC and ESC |
 | FPV camera | 19 mm "micro" camera on an M2 pivot, tilt 0–40° |
 | Plate gap | 30 mm (M3×30 standoffs) |
-| Battery | Top-mounted, 4S/6S 1100–1500 mAh, two straps |
+| Battery | Top-mounted 6S 1100–1200 mAh, **up to 78 × 40 × 34 mm**, two straps |
 | Arms | 4 bolt-on arms, 3 × M3 bolts each, interchangeable |
 | Frame weight | About 96 g printed: arms and plates ≈80 g, canopy ≈8 g, GPS/XT60 tower ≈8 g (calculated from STL volumes) |
 | All-up weight | About 520–550 g with a 6S 1100–1300 mAh battery; about 690 g with a full-size GoPro (see the weight budget below) |
-| Largest part | Arm, 126 × 32 mm. Four arms fit on one plate. |
+| Largest part | Top plate, 50 × 112 mm. Four arms (128 × 32 mm) fit on one plate. |
+
+## Drawings and fit check
+
+- **[`drawings/KAT-5_drawings.pdf`](drawings/KAT-5_drawings.pdf):** 7 blueprint sheets, 17 × 11 in. PNGs of each sheet are in `drawings/`.
+  1. General arrangement (top, front and side views) with numbered callouts
+  2. Exploded isometric, parts list and fasteners
+  3. Arm and centre plate, dimensioned
+  4. Top plate and canopy, dimensioned
+  5. Tower, camera mount, antenna mount, GoPro mount and VTX plate
+  6. Wiring diagram for the SpeedyBee F405 V4 stack on ArduPilot, with motor order and starting parameters
+  7. Fit-check report
+- **[`FIT_CHECK.md`](FIT_CHECK.md):** each recommended part was modelled at its published size and checked for collisions against the frame in CAD.
+- **`tools/`:** the scripts that regenerate the drawings and the fit check from `kat5.scad`.
+
+![general arrangement](drawings/K5_sheet1.png)
 
 ## Electronics and weight budget
 
@@ -64,6 +79,8 @@ The bolt-on arms, canopy and tower add about 40 g over a one-piece frame. If you
 | `cam_mount.stl` | 1 | TPU 95A | Clamps under the two front standoffs. |
 | `antenna_mount.stl` | 1 | TPU 95A | Clamps under the two rear standoffs. Holds the VTX SMA connector and two ELRS antenna tubes. |
 | `gopro_mount.stl` | 1 | TPU 95A | 3-prong mount at a 20° tilt, strapped to the front of the top plate. |
+| `vtx_plate.stl` | 1 | PETG | Bolts on top of the 30.5 mm stack and carries a 20 × 20 mm VTX (SpeedyBee TX800) on M2 nylon screws. |
+| `test_coupon.stl` | 1 | PETG | **Print this first** (about 10 minutes). It checks the motor holes, stack holes, M2 hole, camera width, XT60 opening and GPS pocket on your printer. |
 | `standoff.stl` | 4 | PETG | Optional. Too fat to fit inside the canopy, so use M3×30 aluminium standoffs (5–5.5 mm hex) if you fit the canopy. |
 
 ## Print settings (Bambu Studio)
@@ -85,7 +102,8 @@ The bolt-on arms, canopy and tower add about 40 g over a one-piece frame. If you
 
 ## Hardware
 
-- 16× M3×8 screws for the motors. **Check that the screw tips don't touch the motor windings.** Use 4 mm of thread into the motor at most.
+- **Motors:** 16× M3×8 screws. The M3×6/7 screws that come with most 2207 motors are too short for the 4 mm arm. **Check that the screw tips don't touch the motor windings**, and use 4 mm of thread into the motor at most.
+- **VTX:** 4× M2 nylon screws and 1.5 mm spacers to fix it to the VTX plate.
 - 4× M3×30 standoffs, plus 8× M3×8 screws to fix them to the plates.
 - **Arms:** each arm takes 3 bolts. One is a stack bolt (below). The other two are 8× M3×10 with nylock nuts on top of the centre plate.
 - **Stack:** 4× M3×30–35 screws, from under the arms up through the arm, the centre plate and the stack, with soft-mount grommets and nylock nuts on top.
