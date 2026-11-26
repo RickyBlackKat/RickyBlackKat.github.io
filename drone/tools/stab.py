@@ -1,7 +1,7 @@
 import sys
 BATT_Y=float(sys.argv[1]) if len(sys.argv)>1 else -14.25
 GOPRO=float(sys.argv[2]) if len(sys.argv)>2 else 0
-NOMOUNT=len(sys.argv)>3
+NOMOUNT=len(sys.argv)>3 and sys.argv[3]=='nomount'
 OUTF=sys.argv[4] if len(sys.argv)>4 else 'stability.json'
 import numpy as np, re, json, math
 def load(fn):
@@ -30,7 +30,7 @@ def box(name,m,c,dims,kind='bought'):
 def cyl(name,m,c,d,h,kind='bought'):
     r=d/2; I=np.diag([m*(3*r*r+h*h)/12]*2+[m*r*r/2]); items.append((name,m,np.array(c,float),I,kind))
 def pt(name,m,c,kind='hardware'): items.append((name,m,np.array(c,float),np.zeros((3,3)),kind))
-mxy=115/math.sqrt(2); P=[(sx*mxy,sy*mxy) for sx in (-1,1) for sy in (-1,1)]
+mxy=116/math.sqrt(2); P=[(sx*mxy,sy*mxy) for sx in (-1,1) for sy in (-1,1)]
 pt_=8  # plate top (arm 5 + plate 3)
 box('ESC SpeedyBee BLS 55A',23.5,(0,0,pt_+5),(45.6,44,8))
 box('FC SpeedyBee F405 V4',10.5,(0,0,pt_+14.4),(41.6,39.4,7.8))
@@ -61,13 +61,13 @@ b=np.array([1,cg[1],cg[0],0]); T=np.linalg.solve(A,b)              # thrust frac
 dev=(T/0.25-1)*100
 prop_plane=27.6
 # tip-over on landing: contacts = arm undersides out to the pad edge (r=131 on the diagonals)
-e=131/math.sqrt(2)
+e=132/math.sqrt(2)
 edges=[e-cg[1], e+cg[1], e-cg[0], e+cg[0]]
 tip=math.degrees(math.atan(min(edges)/cg[2]))
 # ---- arm beam: cantilever fixed at the plate edge (r=41), tip load at the motor (r=115)
 E=1800.0  # MPa = N/mm^2 (printed PETG, XY; Prusa 1.7-1.8 GPa)
 def section(r):
-    w=22+(15-22)*(r-30)/(115-30)
+    w=22+(15-22)*(r-30)/(116-30)
     if abs(r-58)<1.6 or abs(r-82)<1.6: w-=3.6          # zip-tie slots
     parts=[(w,5.0,0.0)]                                # (width, height, base z) rectangles stacked
     if 41<=r<=98:
@@ -80,12 +80,12 @@ def section(r):
     Iy=sum(w_*h_**3/12+w_*h_*(z_+h_/2-zc)**2 for w_,h_,z_ in parts)
     ztop=max(z_+h_ for w_,h_,z_ in parts)
     return A,Iy,max(zc,ztop-zc)
-rs=np.linspace(41,115,741); dr=rs[1]-rs[0]
+rs=np.linspace(41,116,751); dr=rs[1]-rs[0]
 sec=[section(r) for r in rs]
 def tip_deflection(F):   # unit-load method: delta = int M(r) m(r)/(EI) dr
-    return sum(F*(115-r)*(115-r)/(E*Iy) for r,(A,Iy,c) in zip(rs,sec))*dr
+    return sum(F*(116-r)*(116-r)/(E*Iy) for r,(A,Iy,c) in zip(rs,sec))*dr
 def max_stress(F):
-    return max(F*(115-r)*c/Iy for r,(A,Iy,c) in zip(rs,sec))
+    return max(F*(116-r)*c/Iy for r,(A,Iy,c) in zip(rs,sec))
 k=1/tip_deflection(1.0)          # N/mm
 m_arm=1.27e-3*0.92*sum(A for A,Iy,c in sec)*dr     # g, beyond clamp
 m_tip=31.6+3.8+2.2+1.5

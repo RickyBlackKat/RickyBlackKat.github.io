@@ -30,7 +30,7 @@ part = "assembly";
 $fn = 64;
 
 // ---------------- Main geometry --------------------------------------
-wheelbase      = 230;          // motor-to-motor diagonal (5.5 mm prop-tip clearance at 5.1")
+wheelbase      = 232;          // motor-to-motor diagonal (5.7 mm prop-tip clearance at 5.1")
 prop_d         = 129.5;        // 5.1" props (preview / clearance)
 
 arm_t          = 5;            // arm plate thickness (stiffness: first bending mode ~145 Hz)
@@ -39,7 +39,7 @@ top_t          = 3;            // top plate thickness
 standoff_h     = 30;           // M3 x 30 standoffs
 tpu_base_t     = 2;            // TPU accessory bases under the standoffs
 
-body_w         = 50;           // centre body width (X): fits a 45.6 mm ESC inside the canopy
+body_w         = 52;           // centre body width (X): 45.6 mm ESC + 1.2 mm each side inside a 2 mm canopy wall
 body_l         = 92;           // centre body length (Y)
 body_r         = 10;           // large corner radius keeps prop tips clear
 fillet_r       = 6;            // inside-corner fillets on plates and arms
@@ -104,6 +104,8 @@ module body_2d() offset(body_r) square([body_w - 2*body_r, body_l - 2*body_r], c
 module hole_at(p, d, h=100) translate([p[0], p[1], -1]) cylinder(d=d, h=h);
 module standoff_holes(d=so_hole_d) for (sx=[-1,1], sy=[-1,1]) hole_at([sx*so_x, sy*so_y], d);
 module paddle_2d() hull() { translate([paddle_r0,0]) circle(d=arm_root_d); translate([paddle_r1,0]) circle(d=arm_root_d); }
+arm_gap = 1.0;     // each arm root stays this far inside its own 90° sector → ≥ 2 mm between neighbouring arms
+module arm_sector_2d() offset(delta=-arm_gap) polygon([[0,0], [300*cos(45), 300*sin(45)], [300*cos(45), -300*sin(45)]]);
 // Arm root holes in arm-local coordinates (arm along +X)
 module arm_root_holes() {
     hole_at([stack_r, 0], stack_hole_d);
@@ -111,11 +113,11 @@ module arm_root_holes() {
 }
 
 // ---------------- Bolt-on arm (local: along +X, bottom at Z=0) ------
-module arm_2d() closing(5) union() {
+module arm_2d() intersection() { arm_sector_2d(); closing(5) union() {
     paddle_2d();
     hull() { translate([paddle_r1,0]) circle(d=arm_root_d); translate([motor_r,0]) circle(d=arm_w_tip); }
     translate([motor_r,0]) circle(d=motor_pad_d);
-}
+} }
 module arm_spine() {
     r0 = paddle_end; r1 = motor_r - bell_clear_r; rp = r0 + 9;
     module sec(r, h, wb) hull() {
@@ -176,29 +178,53 @@ module top_plate() {
 }
 
 // ---------------- Canopy (between the plates) -----------------------
-canopy_wall = 1.2;
+canopy_wall = 2.0;                         // 5 perimeters
 canopy_gap  = 0.4;                         // tolerance: canopy must stay shorter than the standoff + TPU-base stack
 canopy_h    = top_z - plate_top - canopy_gap;   // 31.6 mm
+canopy_flange = 3;                         // inward stiffening flange round the top edge
+module canopy_clip(sx, sy, z0) {            // sleeve round a standoff, webbed to the side wall
+    translate([sx*so_x, sy*so_y, z0]) difference() {
+        union() {
+            cylinder(d=10, h=canopy_h - z0, $fn=40);
+            translate([sx > 0 ? 0 : -(body_w/2 - so_x - 0.5), -1.5, 0]) cube([body_w/2 - so_x - 0.5, 3, canopy_h - z0]);
+        }
+        translate([0,0,-1]) cylinder(d=6.8, h=canopy_h, $fn=6);   // 5.5 mm hex standoff + clearance
+        // open the inboard side so the sleeve clears the camera cradle / antenna tubes
+        translate([sx > 0 ? -10 : so_x - 13.2, -10, -1]) cube([10 - (so_x - 13.2), 20, canopy_h + 2]);   // keep |x| >= 13.2
+    }
+}
 module canopy() {      // local: Z = 0 sits on the centre plate
     difference() {
-        linear_extrude(canopy_h) difference() { body_2d(); offset(delta=-canopy_wall) body_2d(); }
-        // camera window (front) and antenna / battery-lead opening (rear)
-        translate([-14, body_l/2 - 8, 3]) cube([28, 10, canopy_h - 6]);
-        translate([-17.5, -body_l/2 - 2, 3]) cube([35, 10, canopy_h - 6]);
+        union() {
+            linear_extrude(canopy_h) difference() { body_2d(); offset(delta=-canopy_wall) body_2d(); }
+            // stiffening flange round the top
+            translate([0,0,canopy_h - 1.6]) linear_extrude(1.6)
+                difference() { offset(delta=-canopy_wall + 0.01) body_2d(); offset(delta=-canopy_wall - canopy_flange) body_2d(); }
+            // bottom flange on the front and rear walls only (the ESC needs the side clearance)
+            for (sy=[-1,1]) intersection() {
+                linear_extrude(1.6) difference() { offset(delta=-canopy_wall + 0.01) body_2d(); offset(delta=-canopy_wall - canopy_flange) body_2d(); }
+                translate([-body_w/2, sy > 0 ? body_l/2 - 14 : -body_l/2, 0]) cube([body_w, 14, 2]);
+            }
+            for (sx=[-1,1]) { canopy_clip(sx, 1, tpu_base_t + 0.6); canopy_clip(sx, -1, 10); }
+        }
+        // camera window (front) and antenna / battery-lead opening (rear), walls only
+        translate([-13, body_l/2 - canopy_wall - 0.5, -1]) cube([26, 4, canopy_h - 2]);      // camera window: lens clears at 30°, cradle passes under
+        translate([-17, -body_l/2 - 1, -1]) cube([34, canopy_wall + 1.5, canopy_h - 4]);    // antenna tab + tubes pass through
+        for (sx=[-1,1], sy=[-1,1]) translate([sx*so_x, sy*so_y, -1]) cylinder(d=6.8, h=canopy_h + 2, $fn=6);  // standoffs through the flange
         // notches over the TPU camera / antenna bases
         translate([-20.4, 30.6, -1]) cube([40.8, 16, tpu_base_t + 1.4]);
         translate([-20.4, -46.4, -1]) cube([40.8, 12.8, tpu_base_t + 1.4]);
         // motor-wire exits at the four corners, level with the ESC pads
         for (sx=[-1,1], sy=[-1,1]) translate([sx*(body_w/2 - 4), sy*(body_l/2 - 28), 0]) cube([16, 14, 18], center=true);
         // USB access, both sides
-        translate([-30, -8, 8]) cube([60, 16, 12]);
+        translate([-30, -7, 9]) cube([60, 14, 10]);
         // slanted cooling vents, rear half
-        for (y=[-34, -26, -18], s=[-1,1])
-            translate([s*body_w/2, y, canopy_h/2]) rotate([25,0,0]) cube([4, 3, 16], center=true);
+        for (y=[-30, -22], s=[-1,1])
+            translate([s*body_w/2, y, canopy_h/2]) rotate([25,0,0]) cube([6, 3, 14], center=true);
         // engraved name
-        translate([body_w/2 - 0.6, 15, canopy_h/2 - 3]) multmatrix([[0,0,1,0],[1,0,0,0],[0,1,0,0],[0,0,0,1]])
+        translate([body_w/2 - 0.6, 13, canopy_h/2 - 3]) multmatrix([[0,0,1,0],[1,0,0,0],[0,1,0,0],[0,0,0,1]])
             linear_extrude(1) text("KAT-5", size=6, font="Liberation Sans:style=Bold");
-        mirror([1,0,0]) translate([body_w/2 - 0.6, 37, canopy_h/2 - 3])
+        mirror([1,0,0]) translate([body_w/2 - 0.6, 35, canopy_h/2 - 3])
             multmatrix([[0,0,1,0],[-1,0,0,0],[0,1,0,0],[0,0,0,1]])
             linear_extrude(1) text("KAT-5", size=6, font="Liberation Sans:style=Bold");
     }
@@ -378,6 +404,9 @@ module comp(n, c=0) {
         translate([0, 11.5, 0]) cbox([12, 7, 6], c); }                               // solder cups + wire
 }
 if (part == "fit_pair") intersection() { placed(fa); comp(fb, fc_); }
+if (part == "fit_pp") intersection() { placed(fa); placed(fb); }   // frame part vs frame part
+// neighbouring arms grown by fc_ mm (2D, plan view): must be empty
+if (part == "fit_arms") intersection() { rotate(45) offset(delta=fc_) arm_2d(); rotate(135) offset(delta=fc_) arm_2d(); }
 if (part == "fit_cc")   intersection() { comp(fa, fc_); comp(fb, 0); }
 fa = ""; fb = ""; fc_ = 0;
 

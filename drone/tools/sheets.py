@@ -190,14 +190,14 @@ def table(x, y, cols, rows, rh=21, head=True, size=11.5):
     return g
 
 # ---------------------------------------------------------------- parameters
-P = dict(motor_r=115.0, mxy=115 / math.sqrt(2), stack=30.5, so_x=16, so_y=40, body_w=50, body_l=92,
+P = dict(motor_r=116.0, mxy=116 / math.sqrt(2), stack=30.5, so_x=16, so_y=40, body_w=52, body_l=92,
          arm_t=4, plate_t=3, top_t=3, so_h=30, prop_d=129.5)
 
 BOM = [  # item, qty, description, spec / material, file or source
     ('1', '4', 'ARM, BOLT-ON (5 mm + SPINE)', 'PETG, 6 WALLS, 40% GYROID', 'stl/arm.stl'),
     ('2', '1', 'CENTRE PLATE', 'PETG, 3 mm', 'stl/bottom_plate.stl'),
     ('3', '1', 'TOP PLATE', 'PETG, 3 mm', 'stl/top_plate.stl'),
-    ('4', '1', 'CANOPY', 'PETG/PLA 1.2 mm (or TPU)', 'stl/canopy.stl'),
+    ('4', '1', 'CANOPY (2 mm, FLANGE, SLEEVES)', 'PETG/PLA, 5 WALLS', 'stl/canopy.stl'),
     ('5', '1', 'GPS + XT60 TOWER', 'PETG', 'stl/gps_xt60_mount.stl'),
     ('6', '1', 'CAMERA MOUNT', 'TPU 95A', 'stl/cam_mount.stl'),
     ('7', '1', 'ANTENNA MOUNT', 'TPU 95A', 'stl/antenna_mount.stl'),
@@ -248,13 +248,13 @@ def sheet1():
     g += assembly_view(top, 'top'); g.append(crosshair(top))
     g.append(view_title(top, 410, 90, 'TOP VIEW', '1:2'))
     m = P['mxy']
-    g.append(dim(top, (-m, m), (m, m), 82, '162.6'))
-    g.append(dim(top, (m, -m), (m, m), 82, '162.6', orient='v'))
+    g.append(dim(top, (-m, m), (m, m), 82, '164.0'))
+    g.append(dim(top, (m, -m), (m, m), 82, '164.0', orient='v'))
     # diagonal wheelbase
     a, b = top.P(-m, -m), top.P(m, m)
-    g.append(L(*a, *b, ACC, 0.8, '8 4')); q = (a[0] * 0.8 + b[0] * 0.2, a[1] * 0.8 + b[1] * 0.2); g.append(T(q[0] + 14, q[1] - 6, 'WHEELBASE 230 (DIAG.)', 12, color=ACC, rot=-45))
-    g.append(dim(top, (-25, -46), (25, -46), -88, '50'))
-    g.append(leader(top, (15 + 7.07, 36 + 7.07), 'PROP TIP ↔ BODY 5.6 MIN.', 150, -40, 11))
+    g.append(L(*a, *b, ACC, 0.8, '8 4')); q = (a[0] * 0.8 + b[0] * 0.2, a[1] * 0.8 + b[1] * 0.2); g.append(T(q[0] + 14, q[1] - 6, 'WHEELBASE 232 (DIAG.)', 12, color=ACC, rot=-45))
+    g.append(dim(top, (-26, -46), (26, -46), -88, '52'))
+    g.append(leader(top, (15 + 7.07, 36 + 7.07), 'PROP TIP ↔ BODY 5.7 MIN.', 150, -40, 11))
     g.append(leader(top, (0, 50), 'FRONT (CAMERA)', -20, -80, 11))
     # balloons on top view
     for n, p, dx, dy in [('1', (m * 0.55, -m * 0.55), 70, 60), ('11', (m, m), 55, -40), ('12', (-m - 40, -m - 40), -40, 30),
@@ -264,8 +264,8 @@ def sheet1():
     fr = View(1170, 300, s)
     g += assembly_view(fr, 'front')
     g.append(view_title(fr, 1170, 90, 'FRONT VIEW', '1:2'))
-    g.append(dim(fr, (-m, 0), (m, 0), -24, '162.6'))
-    g.append(dim(fr, (-25, 0), (-25, 79), -100, '79', orient='v'))
+    g.append(dim(fr, (-m, 0), (m, 0), -24, '164.0'))
+    g.append(dim(fr, (-26, 0), (-26, 79), -100, '79', orient='v'))
     g.append(leader(fr, (0, 79), 'TOP OF BATTERY', 120, -20, 11))
     for n, p, dx, dy in [('15', (0, 21), 0, 0), ('4', (24, 20), 95, 30), ('18', (-15, 70), -110, -30), ('13', (-22, 11), -150, 20)]:
         if n == '15': continue
@@ -285,7 +285,7 @@ def sheet1():
              '1. SOLID LINES: PRINTED / FRAME PARTS. DASHED: BOUGHT COMPONENTS AT PUBLISHED SIZE.',
              '2. CHAIN LINE: 5.1" PROP DISC, Ø129.5.',
              '3. BALLOON NUMBERS REFER TO THE PARTS LIST ON SHEET 2.',
-             '4. ARMS MOUNT UNDER THE CENTRE PLATE; 3 x M3 PER ARM, ONE IS A STACK BOLT.',
+             '4. ARMS MOUNT UNDER THE CENTRE PLATE; 3 x M3 PER ARM. ROOTS CLIPPED TO 90° SECTORS: 2 mm BETWEEN ARMS.',
              '5. FIT CHECKED IN CAD AGAINST REAL PART SIZES — SEE SHEET 7. TOLERANCES: SHEET 8. STABILITY: SHEET 9.',
              '6. NO ACTION CAMERA: REMOVE ITEM 8 AND SLIDE THE BATTERY FORWARD, FRONT EDGE FLUSH WITH ITEM 3 (SHEET 9).']
     for i, t in enumerate(notes):
@@ -328,17 +328,18 @@ def sheet3():
     g += [path(v, load('part_arm_top_all')), path(v, load('part_arm_top_4.01'), stroke=INK, sw=1.0)]
     g.append(view_title(v, 500, 100, 'ITEM 1 — ARM, TOP VIEW', '1:1'))
     g.append(L(*v.P(-2, 0), *v.P(133, 0), FAINT, 0.6, '14 3 2 3'))
-    g.append(dim(v, (3, 0), (131, 0), 30, '128'))
-    g.append(dim(v, (21.57, 0), (115, 0), -26, '93.4 ±0.15'))
+    g.append(dim(v, (3, 0), (132, 0), 30, '129'))
+    g.append(dim(v, (21.57, 0), (116, 0), -26, '94.4 ±0.15'))
     g.append(dim(v, (21.57, 0), (31, 6), 20, '9.4'))
     g.append(dim(v, (31, -6), (31, 6), -18, '12 ±0.1', orient='v'))
-    g.append(dim(v, (99, -8), (99, 8), -12, '16 ±0.1', orient='v'))
-    g.append(dim(v, (107, 8), (123, 8), 12, '16 ±0.1'))
+    g.append(dim(v, (100, -8), (100, 8), -12, '16 ±0.1', orient='v'))
+    g.append(dim(v, (108, 8), (124, 8), 12, '16 ±0.1'))
     g.append(leader(v, (21.57 - 1.2, 1.2), 'Ø3.4 +0.2/0 STACK BOLT (30.5 SQ.)', -40, -95, 11))
     g.append(leader(v, (31, -6), '2x Ø3.4 +0.2/0 ARM BOLTS', -60, 80, 11))
-    g.append(leader(v, (115, 0), 'Ø7.5 SHAFT CLEARANCE', 70, -130, 11))
-    g.append(leader(v, (123, 8), '4x Ø3.4 +0.2/0 ON 16x16, Ø6x1 C\'BORE UNDER', 60, -60, 11))
-    g.append(leader(v, (127, -9), 'MOTOR PAD Ø32', 50, 55, 11))
+    g.append(leader(v, (116, 0), 'Ø7.5 SHAFT CLEARANCE', 70, -130, 11))
+    g.append(leader(v, (124, 8), '4x Ø3.4 +0.2/0 ON 16x16, Ø6x1 C\'BORE UNDER', 60, -60, 11))
+    g.append(leader(v, (128, -9), 'MOTOR PAD Ø32', 50, 55, 11))
+    g.append(leader(v, (8, 6.5), 'ROOT: 90° SECTOR −1 mm', -20, 150, 11))
     g.append(dim(v, (3, -11), (3, 11), -8, '22', orient='v'))
     g.append(leader(v, (82, -6.6), 'MOTOR-WIRE ZIP SLOTS 3.2 x 1.8', 150, 95, 11))
     g.append(leader(v, (60, 3.2), 'SPINE (RAISED)', 10, -70, 11))
@@ -356,8 +357,8 @@ def sheet3():
     cp = View(1290, 430, 3.6)
     g += [path(cp, load('part_bottom_plate_top_all')), crosshair(cp)]
     g.append(view_title(cp, 1290, 90, 'ITEM 2 — CENTRE PLATE, TOP VIEW', '≈ 1:1.1'))
-    g.append(dim(cp, (-25, 46), (25, 46), 14, '50'))
-    g.append(dim(cp, (-25, -46), (-25, 46), -46, '92', orient='v'))
+    g.append(dim(cp, (-26, 46), (26, 46), 14, '52'))
+    g.append(dim(cp, (-26, -46), (-26, 46), -46, '92', orient='v'))
     g.append(dim(cp, (-15.25, -15.25), (15.25, -15.25), -50, '30.5 ±0.1'))
     g.append(dim(cp, (15.25, -15.25), (15.25, 15.25), 48, '30.5 ±0.1', orient='v'))
     g.append(dim(cp, (-16, -40), (16, -40), -30, '32'))
@@ -368,7 +369,7 @@ def sheet3():
     g.append(leader(cp, (-23, 30), 'R10 BODY CORNERS, R6 FILLETS', -60, -110, 11))
     g.append(T(1290, 760, 'THICKNESS 3.0 — ARMS BOLT TO THE UNDERSIDE', 12, color=THIN))
     notes = ['PRINT NOTES (ITEMS 1, 2)', '• PETG 0.2 mm LAYERS, 6 WALLS, 5 TOP/BOTTOM, 40% GYROID.',
-             '• PRINT FLAT, SPINE UP. NO SUPPORTS.', '• PRINT 4 ARMS + 2 SPARES. ALL ARMS ARE IDENTICAL.',
+             '• PRINT FLAT, SPINE UP. NO SUPPORTS.', '• PRINT 4 ARMS + 2 SPARES. ALL ARMS ARE IDENTICAL; NEIGHBOURS CLEAR BY 2 mm.',
              '• ALL M3 HOLES Ø3.4 +0.2/0. HOLE POSITIONS ±0.1. PRINT THE TEST COUPON FIRST.']
     for i, t in enumerate(notes):
         g.append(T(70, 760 + i * 19, t, 12.5 if i else 13, anchor='start', weight='bold' if i == 0 else 'normal', color=ACC if i == 0 else INK))
@@ -383,10 +384,10 @@ def sheet4():
     tp = fit(['part_top_plate_top_all'], 330, 540, 3.6)
     g += [path(tp, load('part_top_plate_top_all')), crosshair(tp)]
     g.append(vt(tp, 'ITEM 3 — TOP PLATE', '≈ 1:1.1', 150))
-    g.append(dim(tp, (-25, 46), (25, 46), 26, '50'))
+    g.append(dim(tp, (-26, 46), (26, 46), 26, '52'))
     g.append(dim(tp, (-21.5, 26), (21.5, 26), 24, '43 (STRAP SLOT C/C)'))
-    g.append(dim(tp, (-25, -66), (-25, 46), -30, '112', orient='v'))
-    g.append(dim(tp, (25, -46), (25, 46), 22, '92', orient='v'))
+    g.append(dim(tp, (-26, -66), (-26, 46), -30, '112', orient='v'))
+    g.append(dim(tp, (26, -46), (26, 46), 22, '92', orient='v'))
     g.append(dim(tp, (21.5, 4), (21.5, 26), 8, '22', orient='v'))
     g.append(dim(tp, (-8, -58), (8, -58), -16, '16'))
     g.append(dim(tp, (-14, -66), (14, -66), -26, '28 (TAB)'))
@@ -394,30 +395,30 @@ def sheet4():
     g.append(leader(tp, (0, 29), 'GOPRO STRAP SLOT 19 x 3.5', 150, -40, 11))
     g.append(leader(tp, (0, -6), 'WIRE PASS 16 x 28', 150, 0, 11))
     g.append(leader(tp, (8, -58), '2x Ø3.4 +0.2/0 TOWER BOLTS', 110, 20, 11))
-    g.append(leader(tp, (-16, -40), '4x Ø3.4 +0.2/0 STANDOFFS (32 x 80 ±0.1)', -40, 140, 11))
+    g.append(leader(tp, (-16, -40), '4x Ø3.4 STANDOFFS (32 x 80 ±0.1)', 10, 160, 11))
     g.append(T((tp.left + tp.right) / 2, tp.bot + 120, 'THICKNESS 3.0', 12, color=THIN))
     cf = fit(['part_canopy_front_all'], 900, 300, 3.6)
     g += [path(cf, load('part_canopy_front_all'))]
     g.append(vt(cf, 'ITEM 4 — CANOPY, FRONT', '≈ 1:1.1', 80))
-    g.append(dim(cf, (-25, 31.6), (25, 31.6), 10, '50'))
-    g.append(dim(cf, (25, 0), (25, 31.6), 10, '31.6 +0/−0.2', orient='v'))
-    g.append(dim(cf, (-14, 3), (14, 3), -12, '28 (CAMERA WINDOW)'))
-    g.append(dim(cf, (-25, 3), (-25, 29), -10, '26', orient='v'))
+    g.append(dim(cf, (-26, 31.6), (26, 31.6), 10, '52'))
+    g.append(dim(cf, (26, 0), (26, 31.6), 10, '31.6 +0/−0.2', orient='v'))
+    g.append(dim(cf, (-13, 0), (13, 0), -12, '26 (CAMERA WINDOW)'))
+    g.append(leader(cf, (-20, 4), 'STANDOFF SLEEVES (4), HEX 6.8', -60, 60, 11))
     cs = fit(['part_canopy_side_all'], 1360, 300, 3.6)
     g += [path(cs, load('part_canopy_side_all'))]
     g.append(vt(cs, 'CANOPY — SIDE (FRONT →)', '≈ 1:1.1', 80))
     g.append(dim(cs, (-46, 31.6), (46, 31.6), 10, '92'))
-    g.append(dim(cs, (-8, 8), (8, 8), -18, '16 (USB)'))
-    g.append(dim(cs, (8, 8), (8, 20), 12, '12', orient='v'))
-    g.append(leader(cs, (-34, 16), 'VENTS 3 x 16 @ 25°', -40, 95, 11))
+    g.append(dim(cs, (-7, 9), (7, 9), -18, '14 (USB)'))
+    g.append(dim(cs, (7, 9), (7, 19), 12, '10', orient='v'))
+    g.append(leader(cs, (-30, 16), 'VENTS 3 x 14 @ 25°', -40, 95, 11))
     g.append(leader(cs, (-25, 4), 'MOTOR-WIRE EXITS 14 x 9 (4 CORNERS)', 10, 120, 11))
     ct = fit(['part_canopy_top_all'], 1000, 690, 2.6)
     g += [path(ct, load('part_canopy_top_all'))]
     g.append(vt(ct, 'CANOPY — TOP', '≈ 1:1.5', 40))
-    g.append(leader(ct, (24.4, 0), 'WALL 1.2', 60, 0, 11))
+    g.append(leader(ct, (25, 0), 'WALL 2.0 + TOP FLANGE 3 x 1.6', 60, 0, 11))
     g.append(leader(ct, (24.4, 25), 'ENGRAVED "KAT-5" BOTH SIDES, 0.6 DEEP', 60, -40, 11))
-    notes = ['PRINT NOTES', '• TOP PLATE: PETG FLAT, 6 WALLS, 40%.', '• CANOPY: PETG/PLA UPRIGHT, 3 WALLS, NO SUPPORTS.',
-             '  TPU IF YOU CRASH A LOT.', '• CANOPY NEEDS ALU STANDOFFS ≤ 5.5 HEX.']
+    notes = ['PRINT NOTES', '• TOP PLATE: PETG FLAT, 6 WALLS, 40%.', '• CANOPY: PETG/PLA UPRIGHT, NO SUPPORTS,',
+             '  5 WALLS (2 mm). SLEEVES CLIP OVER THE STANDOFFS.', '• CANOPY NEEDS ALU STANDOFFS ≤ 5.5 HEX.']
     for i, t in enumerate(notes):
         g.append(T(70, 930 + i * 19, t, 12.5, anchor='start', weight='bold' if i == 0 else 'normal', color=ACC if i == 0 else INK))
     return svg(g)
@@ -639,16 +640,18 @@ def sheet7():
     g.append(T(70, 90, 'COMPONENT SIZES USED', 16, anchor='start', weight='bold', ls=2))
     g += table(70, 100, [('COMPONENT', 190, 'start'), ('MODEL', 230, 'start'), ('SIZE (mm)', 200, 'start'), ('SOURCE', 190, 'start')], comp_rows, rh=22)
     res = [
-        ('ESC ↔ CANOPY WALL', '1.0', 'PASS', 'BODY WIDENED 42 → 50 mm'),
+        ('ARM ↔ NEIGHBOURING ARM', '2.0', 'PASS', 'ROOTS CLIPPED (WERE OVERLAPPING 2.2)'),
+        ('ESC ↔ CANOPY WALL (2 mm)', '1.2', 'PASS', 'BODY 42 → 52 mm'),
         ('FC ↔ CANOPY WALL', '3.0', 'PASS', ''),
         ('VTX ↔ TOP PLATE', '2.7', 'PASS', 'VTX PLATE ON STACK (NEW)'),
         ('VTX PLATE ↔ FC', '2.4', 'PASS', 'SITS ON STACK NUTS'),
         ('CAMERA ↔ CRADLE WALLS', '0.2 / SIDE', 'SNUG', 'INTENDED FRICTION FIT'),
         ('CAMERA ↔ FC', '≥ 2', 'PASS', 'AT 30° TILT'),
-        ('CAMERA ↔ CANOPY', '≥ 1', 'PASS', ''),
+        ('CAMERA ↔ CANOPY', '≥ 1', 'PASS', 'WINDOW OPEN TO THE BOTTOM'),
         ('MOTOR BELL ↔ ARM SPINE', '2.5', 'PASS', ''),
         ('PROP ↔ ARM SPINE (14 mm)', '≥ 5', 'PASS', 'TALLER SPINE (SHEET 9)'),
-        ('PROP TIP ↔ CANOPY / BODY', '5.6', 'PASS', 'WHEELBASE 225 → 230, R10'),
+        ('PROP TIP ↔ CANOPY / BODY', '5.7', 'PASS', 'WHEELBASE 225 → 232, R10'),
+        ('CANOPY SLEEVE ↔ STANDOFF', '0.2', 'SNUG', 'HEX 6.8 OVER 5.5 HEX'),
         ('PROP ↔ ANTENNA MOUNT', '≥ 3', 'PASS', ''),
         ('PROP ↔ TOWER, GOPRO, PLATES', '≥ 5', 'PASS', ''),
         ('BATTERY ↔ GOPRO / TOWER', '1.25 EACH', 'PASS', 'BAY 76.5 → 80.5 mm'),
@@ -666,10 +669,11 @@ def sheet7():
             'where it mounts. OpenSCAD intersected it with every frame part',
             'it could touch, then grew it by 0.5, 1, 2, 3 and 5 mm and re-',
             'tested. The gap is the largest growth with no overlap.', '',
-            'ISSUES FOUND AND FIXED IN THIS REVISION', '1. ESC 45.6 mm DID NOT FIT THE 42 mm BODY → BODY 50 mm.',
+            'ISSUES FOUND AND FIXED IN THIS REVISION', '1. ESC 45.6 mm DID NOT FIT THE 42 mm BODY → BODY 52 mm.',
+            '0. ARM ROOTS OVERLAPPED THEIR NEIGHBOURS BY 2.2 mm → CLIPPED.',
             '2. BATTERY 78 mm DID NOT FIT THE 76.5 mm BAY → TOWER MOVED BACK.',
             '3. NO VTX MOUNTING → VTX PLATE ON THE STACK (ITEM 9).', '4. GPS PLATFORM STOOD 1 mm INTO THE POCKET → FIXED.',
-            '5. MOTOR WIRES HAD NO EXIT THROUGH THE CANOPY → 4 EXITS.', '6. WHEELBASE 230 FOR 5.1" PROP-TIP MARGIN.', '',
+            '5. MOTOR WIRES HAD NO EXIT THROUGH THE CANOPY → 4 EXITS.', '6. WHEELBASE 232 FOR 5.1" PROP-TIP MARGIN.', '',
             'LIMITS', '• SIZES ARE FROM RETAILER LISTINGS; MEASURE YOUR PARTS.',
             '• VTX THICKNESS AND XT60 LENGTH ARE ASSUMED.', '• WIRES, SOLDER JOINTS AND CONNECTORS ARE NOT MODELLED.',
             '• PRINT TOLERANCE IS NOT INCLUDED — PRINT THE TEST COUPON.']
@@ -703,7 +707,9 @@ def sheet8():
         ('7', 'XT60 POCKET', '16.3 x 8.5 +0.2/0', 'XT60 15.8 x 8.2', '0.3–0.7', 'COUPON'),
         ('8', 'CANOPY HEIGHT', '31.6 +0/−0.2', 'STANDOFF 30 ±0.1 + TPU 2', '≥ 0.1 (GAP 31.7–32.1)', 'MEASURE'),
         ('9', 'BATTERY BAY', '80.5 ±0.3', 'BATTERY 78 ±1', '1.2–3.8', 'MEASURE'),
-        ('10', 'ESC ↔ CANOPY WALL', '1.0 NOM.', 'ESC 45.6 ±0.2, WALL ±0.2', '≥ 0.6', '—'),
+        ('10', 'ESC ↔ CANOPY WALL', '1.2 NOM.', 'ESC 45.6 ±0.2, WALL ±0.2', '≥ 0.8', '—'),
+        ('12', 'ARM ↔ NEIGHBOUR ARM', '2.0 NOM.', 'ARM ROOT ±0.2 EACH', '≥ 1.6', 'DRY FIT'),
+        ('13', 'CANOPY SLEEVE', 'HEX 6.8 +0.2/0', 'STANDOFF 5.5 HEX', '0.2–0.5', 'DRY FIT'),
         ('11', 'VTX ↔ TOP PLATE', '2.7 NOM.', 'STACK 18.3 ±0.5, VTX 5.5*', '≥ 1.7 (*ASSUMED)', 'DRY FIT'),
     ]
     g.append(T(70, 380, 'CRITICAL FITS', 15, anchor='start', weight='bold', ls=1.5))

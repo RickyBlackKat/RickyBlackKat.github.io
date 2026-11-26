@@ -20,28 +20,33 @@ Every recommended part was modelled at its published size and placed where it mo
 
 ## Problems found and fixed in this revision
 
-1. **ESC didn't fit.** The 45.6 mm ESC didn't fit inside the 42 mm body (39.6 mm inside the canopy). The body is now 50 mm wide, with 10 mm corner radii.
+0. **Neighbouring arm roots overlapped by 2.2 mm.** You could bolt on one arm, but the next one wouldn't line up with its holes. Each root is now clipped to its own 90° sector, 1 mm inside each edge, leaving a 2 mm gap. Checked in CAD: clear with both arms grown 0.9 mm.
+
+1. **ESC didn't fit.** The 45.6 mm ESC didn't fit inside the 42 mm body. The body is now 52 mm wide, leaving 1.2 mm per side inside the 2 mm canopy wall, with 10 mm corner radii.
 2. **Battery didn't fit.** A 78 mm battery didn't fit in the 76.5 mm space between the GoPro mount and the GPS tower. The tower moved back 4 mm, giving an 80.5 mm bay, and the strap slots moved out to 43 mm apart.
 3. **The VTX had nowhere to mount.** A 20 × 20 mm VTX plate now sits on top of the stack.
 4. **The GPS platform intruded into its own pocket.** The platform stood 1 mm into the GPS pocket; it's fixed.
 5. **The motor wires had no way out of the canopy.** Four exits are now cut at the corners.
 6. **Bolt holes now Ø3.4 (were Ø3.3).** This leaves positional tolerance for two printed parts on one bolt; see drawing sheet 8.
 7. **Canopy height now 31.6 mm (was 32).** The canopy can no longer hold the top plate off the standoffs.
+10. **Stronger canopy.** The wall is now 2 mm (was 1.2), with a 3 × 1.6 mm flange round the top, flanges on the front and rear bottom edges, and four sleeves that clip over the standoffs and are webbed to the side walls. It weighs about 21 g. Checked clear of the camera cradle, the antenna mount, the standoffs, the ESC (1.2 mm), the FC, the VTX and the camera.
 8. **Stiffer arms.** A 5 mm plate and a 14 mm spine give about 8 mm of clearance under the props. See [STABILITY.md](STABILITY.md).
-9. **Prop-tip margin.** The wheelbase grew from 225 to 230 mm, giving 5.6 mm of prop-tip clearance with 5.1" props.
+9. **Prop-tip margin.** The wheelbase grew from 225 to 232 mm, giving 5.7 mm of prop-tip clearance with 5.1" props.
 
 ## Results
 
 | Interface | Min. gap (mm) | Result |
 |---|---|---|
-| ESC ↔ canopy wall | 1.0 | Pass |
+| Arm ↔ neighbouring arm | 2.0 | Pass |
+| ESC ↔ canopy wall | 1.2 | Pass |
+| Canopy sleeve ↔ standoff | 0.2 per side | Snug |
 | FC ↔ canopy wall | 3.0 | Pass |
 | VTX ↔ top plate | 2.7 | Pass |
 | VTX plate ↔ FC | 2.4 | Pass (sits on stack nuts) |
 | Camera ↔ cradle walls | 0.2 per side | Snug (intended friction fit) |
 | Camera ↔ FC (at 30° tilt) | ≥ 2 | Pass |
 | Motor bell ↔ arm spine | 2.5 | Pass |
-| Prop tip ↔ body / canopy | 5.6 | Pass |
+| Prop tip ↔ body / canopy | 5.7 | Pass |
 | Prop ↔ antenna mount | ≥ 3 | Pass |
 | Prop ↔ tower, GoPro mount, plates | ≥ 5 | Pass |
 | Battery ↔ GoPro mount / tower | 1.25 each end | Pass |

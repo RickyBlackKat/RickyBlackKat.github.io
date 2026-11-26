@@ -10,17 +10,17 @@ A parametric OpenSCAD frame designed to print on a **Bambu Lab P1P or P1S** in *
 
 | Spec | Value |
 |---|---|
-| Layout | True-X, 230 mm wheelbase (motor to motor, diagonal), 50 × 92 mm body |
+| Layout | True-X, 232 mm wheelbase (motor to motor, diagonal), 52 × 92 mm body |
 | Props | 5" (up to 5.1") |
 | Motors | 22xx/23xx with a 16×16 M3 bolt pattern (2207, 2306, 2306.5) |
 | Flight stack | 30.5×30.5 M3 FC and ESC |
 | FPV camera | 19 mm "micro" camera on an M2 pivot, tilt 0–40° |
 | Plate gap | 30 mm (M3×30 standoffs) |
 | Battery | Top-mounted 6S 1100–1200 mAh, **up to 78 × 40 × 34 mm**, two straps |
-| Arms | 4 bolt-on arms, 3 × M3 bolts each, interchangeable |
+| Arms | 4 bolt-on arms, 3 × M3 bolts each, interchangeable. Each root is clipped to its own 90° sector, leaving 2 mm between neighbours. |
 | Frame weight | About 117 g printed: arms ≈80 g (4 × 20 g), plates ≈31 g, canopy ≈8 g, tower ≈7 g (from the STL volumes) |
-| All-up weight | **≈614 g** with a 6S 1200 mAh battery (calculated from CAD + published part weights); ≈768 g with a full-size GoPro. See [`STABILITY.md`](STABILITY.md). |
-| Largest part | Top plate, 50 × 112 mm. Four arms (128 × 32 mm) fit on one plate. |
+| All-up weight | **≈628 g** with a 6S 1200 mAh battery (calculated from CAD + published part weights); ≈785 g with a full-size GoPro. See [`STABILITY.md`](STABILITY.md). |
+| Largest part | Top plate, 52 × 112 mm. Four arms (129 × 32 mm) fit on one plate. |
 
 ## Drawings and fit check
 
