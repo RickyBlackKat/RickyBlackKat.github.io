@@ -8,6 +8,8 @@ You fly it from a **computer screen** using a handheld controller, with no goggl
 |---|---|
 | ![hover](img/hover.png) | ![cruise](img/cruise.png) |
 
+![exploded view](img/exploded.png)
+
 > **Status: designed but not yet built or flown.** The weights and CG below are calculated, not measured. Tilt-rotors are the hardest VTOL layout to tune. Practice in the simulator first (see [Flight software](#flight-software-ardupilot)).
 
 ## Specs
